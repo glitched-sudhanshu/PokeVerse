@@ -1,4 +1,4 @@
-package org.example.pokeverse.previews
+package org.example.pokeverse.previews.pokemon_list.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme

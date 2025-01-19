@@ -5,6 +5,7 @@ import org.example.pokeverse.pokedex.domain.Pokemon
 
 data class PokemonListState(
     val searchQuery: String? = null,
+    val pokemonsListing: List<Pokemon> = emptyList(),
     val searchResult: List<Pokemon> = emptyList(),
     val favouritePokemons: List<Pokemon> = emptyList(),
     val isLoading: Boolean = false,

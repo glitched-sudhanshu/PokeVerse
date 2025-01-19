@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.example.pokeverse.core.presentation.DarkBlue
 import org.example.pokeverse.pokedex.domain.Pokemon
 import org.example.pokeverse.pokedex.presentation.pokemon_list.components.PokeVerseSearchBar
+import org.example.pokeverse.pokedex.presentation.pokemon_list.components.PokemonList
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -44,7 +46,7 @@ fun PokemonListScreenRoot(
 }
 
 @Composable
-private fun PokemonListScreen(
+fun PokemonListScreen(
     state: PokemonListState,
     onAction: (PokemonListAction) -> Unit
 ) {
@@ -67,6 +69,13 @@ private fun PokemonListScreen(
                 onAction(PokemonListAction.OnSearchQueryChange(it))
             },
             searchQuery = state.searchQuery ?: ""
+        )
+        PokemonList(
+            pokemons = if (state.searchQuery.isNullOrBlank()) state.pokemonsListing else state.searchResult,
+            modifier = Modifier,
+            listState = rememberLazyGridState(),
+            onClick = {},
+            onLikeClick = {}
         )
     }
 }

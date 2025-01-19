@@ -25,6 +25,8 @@ class PokemonListViewModel : ViewModel() {
                     it.copy(selectedTabIndex = action.index)
                 }
             }
+
+            is PokemonListAction.OnPokemonLikeClick -> {}
         }
     }
 }
