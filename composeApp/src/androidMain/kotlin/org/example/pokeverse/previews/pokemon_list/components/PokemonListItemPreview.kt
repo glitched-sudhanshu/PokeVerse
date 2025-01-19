@@ -32,8 +32,7 @@ private fun PokemonListItemPreview() {
                 baseExperience = 124,
             ),
             onClick = {}
-        ) {
-        }
+        )
         PokemonListItem(
             modifier = Modifier.weight(1f),
             pokemon =
@@ -49,7 +48,6 @@ private fun PokemonListItemPreview() {
                 baseExperience = 124,
             ),
             onClick = {}
-        ) {
-        }
+        )
     }
 }

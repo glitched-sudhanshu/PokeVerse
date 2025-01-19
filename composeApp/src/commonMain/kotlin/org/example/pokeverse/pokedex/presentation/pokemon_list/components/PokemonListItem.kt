@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -51,7 +49,6 @@ fun PokemonListItem(
     pokemon: Pokemon,
     modifier: Modifier = Modifier,
     onClick: (Pokemon) -> Unit,
-    onLikeClick: (Pokemon) -> Unit
 ) {
     Surface(
         shape = RoundedCornerShape(32.dp),
@@ -72,30 +69,14 @@ fun PokemonListItem(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                ) {
-                    Text(
-                        text = pokemon.name.capitalize(Locale.current),
-                        maxLines = 1,
-                        color = DesertWhite,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.W700,
-                        modifier = Modifier.basicMarquee().weight(1f)
-                    )
-
-                    Image(
-                        imageVector = Icons.Default.FavoriteBorder,
-                        contentDescription = "like",
-                        colorFilter = ColorFilter.tint(
-                            DesertWhite
-                        ),
-                        modifier = Modifier.clickable { onLikeClick(pokemon) }
-                            .padding(start = 12.dp),
-                    )
-                }
+                Text(
+                    text = pokemon.name.capitalize(Locale.current),
+                    maxLines = 1,
+                    color = DesertWhite,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.W700,
+                    modifier = Modifier.basicMarquee().padding(16.dp)
+                )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
