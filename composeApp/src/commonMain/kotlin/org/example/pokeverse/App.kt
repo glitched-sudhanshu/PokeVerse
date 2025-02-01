@@ -2,7 +2,6 @@ package org.example.pokeverse
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -27,13 +26,6 @@ fun App() {
         ) {
             composable<PokemonRoute.PokemonListing> { backStackEntry ->
                 val viewmodel: PokemonListViewModel = viewModel(backStackEntry)
-
-
-                val selectedPokemon by viewmodel.selectedPokemon.collectAsStateWithLifecycle()
-                LaunchedEffect(Unit) {
-                    println("selected screen empokemon ${selectedPokemon.pokemon}")
-
-                }
                 PokemonListScreenRoot(
                     pokemonListViewModel = viewmodel,
                     onPokemonClick = {
@@ -48,10 +40,6 @@ fun App() {
                     viewModel(navController.getBackStackEntry(PokemonRoute.PokemonListing))
 
                 val selectedPokemon by viewModel.selectedPokemon.collectAsStateWithLifecycle()
-                LaunchedEffect(Unit) {
-                    println("selected pokemon ${selectedPokemon.pokemon}")
-
-                }
 
                 selectedPokemon.pokemon?.let { pokemon ->
                     PokemonDetailScreen(pokemon = pokemon)
