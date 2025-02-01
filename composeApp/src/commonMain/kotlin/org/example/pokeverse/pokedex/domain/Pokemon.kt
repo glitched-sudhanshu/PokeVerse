@@ -1,13 +1,19 @@
 package org.example.pokeverse.pokedex.domain
 
 data class Pokemon(
-    val id: String,
-    val name: String,
-    val imageUrl: String,
-    val weight: Int,
-    val height: Int,
-    val baseExperience: Int,
     val abilities: List<Ability>,
+    val baseExperience: Int,
+    val cries: Cries,
+    val height: Int,
+    val id: Int,
     val moves: List<Move>,
-    val types: List<PokemonType>
-)
+    val name: String,
+    val species: GenericNamedResource,
+    val sprites: Sprites,
+    val stats: List<Stat>,
+    val types: List<Type>,
+    val weight: Int
+) {
+    val imageUrl = sprites.frontDefault ?: sprites.frontShiny ?: sprites.frontFemale
+    ?: sprites.frontShinyFemale
+}

@@ -60,7 +60,9 @@ fun PokemonDetailScreen(
     Scaffold { internalPadding ->
         Column(
             modifier = Modifier.fillMaxSize().padding(internalPadding).background(
-                getPokemonTypeColor(pokemon.types.getOrNull(0)) ?: Color.Black.copy(0.3f)
+                getPokemonTypeColor(pokemon.types.getOrNull(0)?.pokemonType) ?: Color.Black.copy(
+                    0.3f
+                )
             ), verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             Column(
@@ -106,7 +108,7 @@ fun PokemonDetailScreen(
                 ) {
                     pokemon.types.forEach { type ->
                         Text(
-                            text = type.name.capitalize(Locale.current),
+                            text = type.type.name.capitalize(Locale.current),
                             color = DesertWhite,
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.clip(RoundedCornerShape(100))

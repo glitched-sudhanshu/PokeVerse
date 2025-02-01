@@ -52,7 +52,6 @@ fun PokemonListScreenRoot(
     pokemonListViewModel: PokemonListViewModel = koinViewModel(),
     onPokemonClick: (Pokemon) -> Unit,
 ) {
-
     val state by pokemonListViewModel.state.collectAsStateWithLifecycle()
 
     PokemonListScreen(

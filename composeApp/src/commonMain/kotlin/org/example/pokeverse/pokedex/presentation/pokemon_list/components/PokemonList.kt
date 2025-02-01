@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +23,7 @@ fun PokemonList(
     errorMessage: String,
     onClick: (Pokemon) -> Unit,
     modifier: Modifier = Modifier,
-    listState: LazyGridState = rememberLazyGridState()
+    listState: LazyGridState
 ) {
     LazyVerticalGrid(
         state = listState,
@@ -50,17 +49,7 @@ fun PokemonList(
         items(pokemons, key = { it.id }) { pokemon ->
             PokemonListItem(
                 modifier = modifier.widthIn(400.dp).fillMaxWidth(),
-                pokemon = Pokemon(
-                    types = pokemon.types,
-                    name = pokemon.name,
-                    id = pokemon.id,
-                    height = pokemon.height,
-                    imageUrl = pokemon.imageUrl,
-                    moves = pokemon.moves,
-                    weight = pokemon.weight,
-                    abilities = pokemon.abilities,
-                    baseExperience = pokemon.baseExperience,
-                ),
+                pokemon = pokemon,
                 onClick = onClick,
             )
         }

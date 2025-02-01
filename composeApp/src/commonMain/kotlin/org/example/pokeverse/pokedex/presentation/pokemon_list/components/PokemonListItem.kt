@@ -53,7 +53,9 @@ fun PokemonListItem(
     Surface(
         shape = RoundedCornerShape(32.dp),
         modifier = modifier.clickable { onClick(pokemon) },
-        color = getPokemonTypeColor(pokemon.types.getOrNull(0))
+        color = getPokemonTypeColor(
+            pokemon.types.getOrNull(0)?.pokemonType
+        )
             ?: Color.Black.copy(0.3f),
     ) {
         Box(modifier = Modifier.wrapContentSize()) {
@@ -88,7 +90,7 @@ fun PokemonListItem(
                     ) {
                         pokemon.types.forEach { type ->
                             Text(
-                                text = type.name.capitalize(Locale.current),
+                                text = type.type.name.capitalize(Locale.current),
                                 color = DesertWhite,
                                 style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.clip(RoundedCornerShape(100))
