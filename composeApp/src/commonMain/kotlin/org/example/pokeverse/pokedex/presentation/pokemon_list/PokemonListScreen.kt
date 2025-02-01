@@ -63,9 +63,8 @@ fun PokemonListScreenRoot(
                     onPokemonClick(action.pokemon)
                 }
 
-                else -> Unit
+                else -> { pokemonListViewModel.onAction(action) }
             }
-            pokemonListViewModel.onAction(action)
         }
     )
 
