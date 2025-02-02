@@ -188,7 +188,7 @@ fun PokemonDetailScreen(
                 ) {
                     pokemon.types.forEach { type ->
                         Text(
-                            text = type.type.name.capitalize(Locale.current),
+                            text = type.name.capitalize(Locale.current),
                             color = DesertWhite,
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.clip(RoundedCornerShape(100))

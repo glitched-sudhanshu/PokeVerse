@@ -2,7 +2,7 @@ package org.example.pokeverse.pokedex.domain.model
 
 data class Type(
     val slot: Int,
-    val type: GenericNamedResource
+    val name: String
 ) {
-    val pokemonType = PokemonType.fromName(type.name)
+    val pokemonType = PokemonType.fromName(name)
 }
