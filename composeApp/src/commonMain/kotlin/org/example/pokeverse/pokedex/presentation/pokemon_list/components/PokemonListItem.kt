@@ -51,7 +51,7 @@ fun PokemonListItem(
 ) {
     Surface(
         shape = RoundedCornerShape(32.dp),
-        modifier = modifier.clickable { onClick(pokemon) },
+        modifier = modifier.clip(RoundedCornerShape(32.dp)).clickable { onClick(pokemon) },
         color = getPokemonTypeColor(
             pokemon.types.getOrNull(0)?.pokemonType
         )

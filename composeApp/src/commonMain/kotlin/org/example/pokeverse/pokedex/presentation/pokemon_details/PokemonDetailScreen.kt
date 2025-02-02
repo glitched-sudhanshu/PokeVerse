@@ -1,10 +1,16 @@
 package org.example.pokeverse.pokedex.presentation.pokemon_details
 
+import androidx.compose.animation.core.InfiniteRepeatableSpec
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,8 +23,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,19 +51,47 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import getPokemonTypeColor
 import org.example.pokeverse.core.presentation.DesertWhite
 import org.example.pokeverse.core.presentation.ImageWithLoader
 import org.example.pokeverse.pokedex.domain.model.Pokemon
 import org.example.pokeverse.pokedex.presentation.pokemon_details.components.PokemonStatItem
+import org.example.pokeverse.pokedex.presentation.pokemon_list.PokeDexViewModel
 import org.jetbrains.compose.resources.painterResource
 import pokeverse.composeapp.generated.resources.Res
 import pokeverse.composeapp.generated.resources.ic_pokeball
 import pokeverse.composeapp.generated.resources.open_pokeball
 
 @Composable
+fun PokemonDetailScreenRoot(
+    viewModel: PokeDexViewModel,
+    onBackClick: () -> Unit,
+) {
+    val selectedPokemon by viewModel.selectedPokemon.collectAsStateWithLifecycle()
+
+    selectedPokemon.pokemon?.let { pokemon ->
+        PokemonDetailScreen(
+            pokemon = pokemon,
+            onAction = {
+                when (it) {
+                    PokemonDetailAction.OnBackClick -> {
+                        onBackClick()
+                    }
+
+                    else -> {
+
+                    }
+                }
+            }
+        )
+    }
+}
+
+@Composable
 fun PokemonDetailScreen(
-    pokemon: Pokemon
+    pokemon: Pokemon,
+    onAction: (PokemonDetailAction) -> Unit
 ) {
     Scaffold { internalPadding ->
         Column(
@@ -74,13 +110,57 @@ fun PokemonDetailScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "back",
+                        modifier = Modifier
+                            .padding(12.dp)
+                            .size(32.dp)
+                            .padding(4.dp)
+                            .clip(CircleShape)
+                            .background(Color.White.copy(.5f))
+                            .align(Alignment.TopStart)
+                            .clickable {
+                                onAction(PokemonDetailAction.OnBackClick)
+                            },
+                        colorFilter = ColorFilter.tint(Color.Black.copy(.8f))
+                    )
+                    val infiniteTransition = rememberInfiniteTransition()
+                    val infiniteScale = infiniteTransition.animateFloat(
+                        initialValue = .75f,
+                        targetValue = 1.25f,
+                        animationSpec = InfiniteRepeatableSpec(
+                            animation = tween(
+                                800,
+                                delayMillis = 0,
+                                easing = LinearEasing
+                            ),
+                            repeatMode = RepeatMode.Reverse
+                        )
+                    )
+                    val infiniteRotate = infiniteTransition.animateFloat(
+                        initialValue = 0f,
+                        targetValue = 360f,
+                        animationSpec = InfiniteRepeatableSpec(
+                            animation = tween(
+                                2400,
+                                delayMillis = 0,
+                                easing = LinearEasing
+                            ),
+                            repeatMode = RepeatMode.Restart
+                        )
+                    )
+                    Image(
                         painter = painterResource(Res.drawable.ic_pokeball),
                         contentDescription = "bg-image",
                         colorFilter = ColorFilter.tint(
                             Color.White.copy(.3f)
                         ),
                         modifier = Modifier.matchParentSize().padding(vertical = 32.dp).rotate(30f)
-                            .aspectRatio(1f, matchHeightConstraintsFirst = true)
+                            .aspectRatio(1f, matchHeightConstraintsFirst = true).graphicsLayer {
+                                scaleX = infiniteScale.value
+                                scaleY = infiniteScale.value
+                                rotationZ = infiniteRotate.value
+                            }
                     )
                     var animatePokemonState by remember { mutableStateOf(true) }
                     val animatePokemon by animateFloatAsState(

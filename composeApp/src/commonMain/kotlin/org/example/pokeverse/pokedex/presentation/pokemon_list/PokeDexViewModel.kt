@@ -25,7 +25,7 @@ import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetails
 import org.example.pokeverse.pokedex.presentation.pokemon_list.utils.AppConstants
 
 @OptIn(FlowPreview::class)
-class PokemonListViewModel(
+class PokeDexViewModel(
     private val pokemonRepository: PokemonRepository
 ) : ViewModel() {
 

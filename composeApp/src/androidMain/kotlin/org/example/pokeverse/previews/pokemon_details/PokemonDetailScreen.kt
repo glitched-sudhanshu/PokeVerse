@@ -8,5 +8,5 @@ import org.example.pokeverse.pokedex.presentation.pokemon_details.testPokemon
 @androidx.compose.ui.tooling.preview.Preview
 @Composable
 private fun PokemonDetailsScreenPreview() {
-    PokemonDetailScreen(pokemon = testPokemon)
+    PokemonDetailScreen(pokemon = testPokemon, onAction = {})
 }

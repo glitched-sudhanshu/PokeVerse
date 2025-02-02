@@ -1,22 +1,21 @@
-package org.example.pokeverse
+package org.example.pokeverse.app
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import org.example.pokeverse.pokedex.presentation.PokemonRoute
-import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailScreen
+import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailScreenRoot
+import org.example.pokeverse.pokedex.presentation.pokemon_list.PokeDexViewModel
 import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListAction
 import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListScreenRoot
-import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -32,11 +31,14 @@ fun App() {
             navigation<PokemonRoute.PokemonNavGraph>(
                 startDestination = PokemonRoute.PokemonListing
             ) {
-                composable<PokemonRoute.PokemonListing> { backStackEntry ->
+                composable<PokemonRoute.PokemonListing>(
+                    exitTransition = { slideOutHorizontally() },
+                    popEnterTransition = { slideInHorizontally() }
+                ) { backStackEntry ->
                     val viewmodel =
-                        backStackEntry.sharedKoinViewModel<PokemonListViewModel>(navController)
+                        backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
                     PokemonListScreenRoot(
-                        pokemonListViewModel = viewmodel,
+                        pokeDexViewModel = viewmodel,
                         onPokemonClick = {
                             viewmodel.onAction(PokemonListAction.OnPokemonClick(it))
                             navController.navigate(PokemonRoute.PokemonDetails)
@@ -44,15 +46,25 @@ fun App() {
                     )
                 }
 
-                composable<PokemonRoute.PokemonDetails> { backStackEntry ->
+                composable<PokemonRoute.PokemonDetails>(
+                    enterTransition = {
+                        slideInHorizontally { initialOffset ->
+                            initialOffset
+                        }
+                    },
+                    exitTransition = {
+                        slideOutHorizontally { initialOffset ->
+                            initialOffset
+                        }
+                    }) { backStackEntry ->
                     val viewmodel =
-                        backStackEntry.sharedKoinViewModel<PokemonListViewModel>(navController)
-
-                    val selectedPokemon by viewmodel.selectedPokemon.collectAsStateWithLifecycle()
-
-                    selectedPokemon.pokemon?.let { pokemon ->
-                        PokemonDetailScreen(pokemon = pokemon)
-                    }
+                        backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
+                    PokemonDetailScreenRoot(
+                        viewModel = viewmodel,
+                        onBackClick = {
+                            navController.popBackStack()
+                        }
+                    )
                 }
 
             }

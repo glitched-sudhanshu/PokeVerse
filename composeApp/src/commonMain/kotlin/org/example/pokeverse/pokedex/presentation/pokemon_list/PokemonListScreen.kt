@@ -52,10 +52,10 @@ import pokeverse.composeapp.generated.resources.search_results
 
 @Composable
 fun PokemonListScreenRoot(
-    pokemonListViewModel: PokemonListViewModel = koinViewModel(),
+    pokeDexViewModel: PokeDexViewModel = koinViewModel(),
     onPokemonClick: (Pokemon) -> Unit,
 ) {
-    val state by pokemonListViewModel.state.collectAsStateWithLifecycle()
+    val state by pokeDexViewModel.state.collectAsStateWithLifecycle()
 
     PokemonListScreen(
         state = state,
@@ -66,12 +66,12 @@ fun PokemonListScreenRoot(
                 }
 
                 else -> {
-                    pokemonListViewModel.onAction(action)
+                    pokeDexViewModel.onAction(action)
                 }
             }
         },
         loadNextPagePokemons = {
-            pokemonListViewModel.getPokemonListing()
+            pokeDexViewModel.getPokemonListing()
         }
     )
 

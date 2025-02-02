@@ -1,4 +1,4 @@
-package org.example.pokeverse.pokedex.presentation
+package org.example.pokeverse.app
 
 import kotlinx.serialization.Serializable
 
