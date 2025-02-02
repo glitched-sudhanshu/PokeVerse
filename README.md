@@ -20,3 +20,4 @@ Presentation -> Domain <- Data
 Pipeline -> Move loader to lottie
 Download comic books for pokemon
 Play 1v1 multiplayer game
+Audio and gif of the pokemon
