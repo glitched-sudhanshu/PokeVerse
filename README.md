@@ -15,3 +15,8 @@ Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-mu
 
 Architecture: MVI
 Presentation -> Domain <- Data
+
+
+Pipeline -> Move loader to lottie
+Download comic books for pokemon
+Play 1v1 multiplayer game
