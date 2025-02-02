@@ -1,5 +1,6 @@
 package org.example.pokeverse.pokedex.presentation.pokemon_list
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -38,6 +40,7 @@ import org.example.pokeverse.core.presentation.SandYellow
 import org.example.pokeverse.pokedex.domain.model.Pokemon
 import org.example.pokeverse.pokedex.presentation.pokemon_list.components.PokeVerseSearchBar
 import org.example.pokeverse.pokedex.presentation.pokemon_list.components.PokemonList
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import pokeverse.composeapp.generated.resources.Res
@@ -45,6 +48,7 @@ import pokeverse.composeapp.generated.resources.favorites
 import pokeverse.composeapp.generated.resources.no_favorite_pokemons
 import pokeverse.composeapp.generated.resources.no_pokemons_listing
 import pokeverse.composeapp.generated.resources.no_search_results
+import pokeverse.composeapp.generated.resources.pokeball_loading
 import pokeverse.composeapp.generated.resources.search_results
 
 @Composable
@@ -62,7 +66,9 @@ fun PokemonListScreenRoot(
                     onPokemonClick(action.pokemon)
                 }
 
-                else -> { pokemonListViewModel.onAction(action) }
+                else -> {
+                    pokemonListViewModel.onAction(action)
+                }
             }
         }
     )
@@ -181,7 +187,11 @@ fun PokemonListScreen(
                         when (pageIndex) {
                             0 -> {
                                 if (state.isLoading) {
-                                    CircularProgressIndicator()
+                                    Image(
+                                        painter = painterResource(Res.drawable.pokeball_loading),
+                                        contentDescription = "page-loader",
+                                        modifier = Modifier.size(64.dp)
+                                    )
                                 } else {
                                     when {
                                         state.errorMessage != null -> {
@@ -207,7 +217,8 @@ fun PokemonListScreen(
                                                     onAction(PokemonListAction.OnPokemonClick(it))
                                                 },
                                                 modifier = Modifier.fillMaxSize(),
-                                                listState = pokemonsListState
+                                                listState = pokemonsListState,
+                                                isPageAppendLoading = state.pageAppendLoading
                                             )
                                         }
                                     }
@@ -223,6 +234,7 @@ fun PokemonListScreen(
                                     modifier = Modifier.fillMaxSize(),
                                     listState = favoritePokemonsListState,
                                     errorMessage = stringResource(Res.string.no_favorite_pokemons),
+                                    isPageAppendLoading = state.pageAppendLoading
                                 )
                             }
                         }

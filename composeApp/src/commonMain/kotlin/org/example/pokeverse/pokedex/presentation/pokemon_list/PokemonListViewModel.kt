@@ -58,7 +58,7 @@ class PokemonListViewModel(
             _state.update {
                 it.copy(isLoading = true)
             }
-            pokemonRepository.getPokemonListing(1, 30).onSuccess { pokemons ->
+            pokemonRepository.getPokemonListing(1, 700).onSuccess { pokemons ->
                     _state.update {
                         it.copy(isLoading = false, pokemonsListing = pokemons, errorMessage = null)
                     }
