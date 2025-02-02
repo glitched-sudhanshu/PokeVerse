@@ -97,7 +97,7 @@ class PokemonListViewModel(
                     it.copy(
                         isLoading = false,
                         pokemonsListing = emptyList(),
-                        errorMessage = error.toUiText(),
+                        errorMessage = if (currentPage == 0) error.toUiText() else null,
                         isNextPageLoading = false
                     )
                 }
