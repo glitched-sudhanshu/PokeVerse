@@ -10,7 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +29,8 @@ fun PokemonList(
     onClick: (Pokemon) -> Unit,
     modifier: Modifier = Modifier,
     listState: LazyGridState,
-    isPageAppendLoading: Boolean = false
+    loadNextPagePokemons: () -> Unit,
+    isNextPageLoading: Boolean = false
 ) {
     LazyVerticalGrid(
         state = listState,
@@ -52,14 +53,17 @@ fun PokemonList(
                 )
             }
         }
-        items(pokemons, key = { it.id }) { pokemon ->
+        itemsIndexed(pokemons, key = { _, pokemon -> pokemon.id }) { index, pokemon ->
+            if (index >= pokemons.size - 1) {
+                loadNextPagePokemons()
+            }
             PokemonListItem(
                 modifier = modifier.widthIn(400.dp).fillMaxWidth(),
                 pokemon = pokemon,
                 onClick = onClick,
             )
         }
-        if (isPageAppendLoading) {
+        if (isNextPageLoading) {
             item {
                 Image(
                     painter = painterResource(Res.drawable.pokeball_loading),

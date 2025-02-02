@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -70,6 +69,9 @@ fun PokemonListScreenRoot(
                     pokemonListViewModel.onAction(action)
                 }
             }
+        },
+        loadNextPagePokemons = {
+            pokemonListViewModel.getPokemonListing()
         }
     )
 
@@ -78,7 +80,8 @@ fun PokemonListScreenRoot(
 @Composable
 fun PokemonListScreen(
     state: PokemonListState,
-    onAction: (PokemonListAction) -> Unit
+    onAction: (PokemonListAction) -> Unit,
+    loadNextPagePokemons: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -218,7 +221,8 @@ fun PokemonListScreen(
                                                 },
                                                 modifier = Modifier.fillMaxSize(),
                                                 listState = pokemonsListState,
-                                                isPageAppendLoading = state.pageAppendLoading
+                                                isNextPageLoading = state.isNextPageLoading,
+                                                loadNextPagePokemons = loadNextPagePokemons
                                             )
                                         }
                                     }
@@ -234,7 +238,8 @@ fun PokemonListScreen(
                                     modifier = Modifier.fillMaxSize(),
                                     listState = favoritePokemonsListState,
                                     errorMessage = stringResource(Res.string.no_favorite_pokemons),
-                                    isPageAppendLoading = state.pageAppendLoading
+                                    isNextPageLoading = state.isNextPageLoading,
+                                    loadNextPagePokemons = {}
                                 )
                             }
                         }

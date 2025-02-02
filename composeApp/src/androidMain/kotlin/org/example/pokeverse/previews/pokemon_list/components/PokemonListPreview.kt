@@ -18,6 +18,7 @@ private fun PokemonListPreview() {
         modifier = Modifier,
         listState = rememberLazyGridState(),
         onClick = {},
+        loadNextPagePokemons = {},
         errorMessage = stringResource(resource = Res.string.no_search_results)
     )
 }

@@ -10,7 +10,7 @@ data class PokemonListState(
     val searchResult: List<Pokemon> = emptyList(),
     val favouritePokemons: List<Pokemon> = emptyList(),
     val isLoading: Boolean = false,
-    val pageAppendLoading: Boolean = false,
+    val isNextPageLoading: Boolean = false,
     val selectedTabIndex: Int = 0,
     val errorMessage: UiText? = null
 )

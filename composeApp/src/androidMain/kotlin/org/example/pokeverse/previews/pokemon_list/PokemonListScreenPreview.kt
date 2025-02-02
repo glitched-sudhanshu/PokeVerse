@@ -11,6 +11,7 @@ import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListState
 private fun PokemonListScreenPreview(modifier: Modifier = Modifier) {
     PokemonListScreen(
         state = PokemonListState(),
-        onAction = {}
+        onAction = {},
+        loadNextPagePokemons = {}
     )
 }
