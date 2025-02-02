@@ -1,5 +1,6 @@
 package org.example.pokeverse.pokedex.data.mappers
 
+import org.example.pokeverse.pokedex.data.database.entities.PokemonEntity
 import org.example.pokeverse.pokedex.data.dto.AbilityDto
 import org.example.pokeverse.pokedex.data.dto.MoveDto
 import org.example.pokeverse.pokedex.data.dto.PokemonDto
@@ -39,4 +40,20 @@ fun PokemonDto.toPokemon() = Pokemon(
     gifUrl = sprites.versions?.generationV?.blackWhite?.animated?.let {
         it.frontDefault ?: it.frontShiny ?: it.frontFemale ?: it.frontShinyFemale
     }
+)
+
+fun Pokemon.toPokemonEntity() = PokemonEntity(
+    abilities,
+    baseExperience,
+    soundUrl,
+    height,
+    id,
+    moves,
+    name,
+    species,
+    imageUrl,
+    gifUrl,
+    stats,
+    types,
+    weight
 )
