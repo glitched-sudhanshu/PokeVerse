@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SpritesDto(
-    @SerialName("back-default") val backDefault: String?,
-    @SerialName("back-female") val backFemale: String?,
-    @SerialName("back-shiny") val backShiny: String?,
-    @SerialName("back-shiny-female") val backShinyFemale: String?,
-    @SerialName("front-default") val frontDefault: String?,
-    @SerialName("front-female") val frontFemale: String?,
-    @SerialName("front-shiny") val frontShiny: String?,
-    @SerialName("front-shiny-female") val frontShinyFemale: String?,
-    val versions: VersionsDto
+    @SerialName("back_default") val backDefault: String?,
+    @SerialName("back_female") val backFemale: String?,
+    @SerialName("back_shiny") val backShiny: String?,
+    @SerialName("back_shiny_female") val backShinyFemale: String?,
+    @SerialName("front_default") val frontDefault: String?,
+    @SerialName("front_female") val frontFemale: String?,
+    @SerialName("front_shiny") val frontShiny: String?,
+    @SerialName("front_shiny_female") val frontShinyFemale: String?,
+    val versions: VersionsDto?
 )

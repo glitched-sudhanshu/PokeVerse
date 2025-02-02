@@ -1,6 +1,6 @@
 package org.example.pokeverse.pokedex.presentation.pokemon_list
 
-import org.example.pokeverse.pokedex.domain.Pokemon
+import org.example.pokeverse.pokedex.domain.model.Pokemon
 
 sealed interface PokemonListAction {
     data class OnSearchQueryChange(val query: String?): PokemonListAction

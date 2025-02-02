@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
 import getPokemonTypeColor
 import org.example.pokeverse.core.presentation.DesertWhite
-import org.example.pokeverse.pokedex.domain.Pokemon
+import org.example.pokeverse.pokedex.domain.model.Pokemon
 import org.jetbrains.compose.resources.painterResource
 import pokeverse.composeapp.generated.resources.Res
 import pokeverse.composeapp.generated.resources.ic_pokeball

@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.example.pokeverse.pokedex.domain.Pokemon
+import org.example.pokeverse.pokedex.domain.model.Pokemon
 
 @Composable
 fun PokemonList(

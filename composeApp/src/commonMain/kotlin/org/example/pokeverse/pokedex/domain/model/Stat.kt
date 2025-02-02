@@ -1,7 +1,6 @@
-package org.example.pokeverse.pokedex.domain
+package org.example.pokeverse.pokedex.domain.model
 
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 data class Stat(
     @SerialName("base_stat") val baseStat: Int,

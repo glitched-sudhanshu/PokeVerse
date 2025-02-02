@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import getPokemonTypeColor
 import org.example.pokeverse.core.presentation.DesertWhite
 import org.example.pokeverse.core.presentation.ImageWithLoader
-import org.example.pokeverse.pokedex.domain.Pokemon
+import org.example.pokeverse.pokedex.domain.model.Pokemon
 import org.example.pokeverse.pokedex.presentation.pokemon_details.components.PokemonStatItem
 import org.jetbrains.compose.resources.painterResource
 import pokeverse.composeapp.generated.resources.Res

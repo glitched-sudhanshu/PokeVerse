@@ -1,6 +1,6 @@
-package org.example.pokeverse.pokedex.domain
+package org.example.pokeverse.pokedex.domain.model
 
-data class Sprites(
+data class Animated(
     val backDefault: String?,
     val backFemale: String?,
     val backShiny: String?,
@@ -8,6 +8,5 @@ data class Sprites(
     val frontDefault: String?,
     val frontFemale: String?,
     val frontShiny: String?,
-    val frontShinyFemale: String?,
-    val versions: Versions
+    val frontShinyFemale: String?
 )

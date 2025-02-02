@@ -1,17 +1,17 @@
 package org.example.pokeverse.pokedex.presentation.pokemon_details
 
-import org.example.pokeverse.pokedex.domain.Ability
-import org.example.pokeverse.pokedex.domain.Animated
-import org.example.pokeverse.pokedex.domain.BlackWhite
-import org.example.pokeverse.pokedex.domain.Cries
-import org.example.pokeverse.pokedex.domain.GenerationV
-import org.example.pokeverse.pokedex.domain.GenericNamedResource
-import org.example.pokeverse.pokedex.domain.Move
-import org.example.pokeverse.pokedex.domain.Pokemon
-import org.example.pokeverse.pokedex.domain.Sprites
-import org.example.pokeverse.pokedex.domain.Stat
-import org.example.pokeverse.pokedex.domain.Type
-import org.example.pokeverse.pokedex.domain.Versions
+import org.example.pokeverse.pokedex.domain.model.Ability
+import org.example.pokeverse.pokedex.domain.model.Animated
+import org.example.pokeverse.pokedex.domain.model.BlackWhite
+import org.example.pokeverse.pokedex.domain.model.Cries
+import org.example.pokeverse.pokedex.domain.model.GenerationV
+import org.example.pokeverse.pokedex.domain.model.GenericNamedResource
+import org.example.pokeverse.pokedex.domain.model.Move
+import org.example.pokeverse.pokedex.domain.model.Pokemon
+import org.example.pokeverse.pokedex.domain.model.Sprites
+import org.example.pokeverse.pokedex.domain.model.Stat
+import org.example.pokeverse.pokedex.domain.model.Type
+import org.example.pokeverse.pokedex.domain.model.Versions
 
 data class PokemonDetailsState(
     val pokemon: Pokemon?

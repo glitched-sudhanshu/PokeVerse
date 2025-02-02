@@ -1,5 +1,5 @@
 import androidx.compose.ui.graphics.Color
-import org.example.pokeverse.pokedex.domain.PokemonType
+import org.example.pokeverse.pokedex.domain.model.PokemonType
 
 fun getPokemonTypeColor(type: PokemonType?): Color? {
     val pokemonTypeColors = mapOf(

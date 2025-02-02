@@ -1,4 +1,4 @@
-package org.example.pokeverse.pokedex.domain
+package org.example.pokeverse.pokedex.domain.model
 
 data class Ability(
     val ability: GenericNamedResource,

@@ -35,7 +35,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.example.pokeverse.core.presentation.DarkBlue
 import org.example.pokeverse.core.presentation.DesertWhite
 import org.example.pokeverse.core.presentation.SandYellow
-import org.example.pokeverse.pokedex.domain.Pokemon
+import org.example.pokeverse.pokedex.domain.model.Pokemon
 import org.example.pokeverse.pokedex.presentation.pokemon_list.components.PokeVerseSearchBar
 import org.example.pokeverse.pokedex.presentation.pokemon_list.components.PokemonList
 import org.jetbrains.compose.resources.stringResource

@@ -1,4 +1,4 @@
-package org.example.pokeverse.pokedex.domain
+package org.example.pokeverse.pokedex.domain.model
 
 sealed class PokemonType(val name: String) {
     data object Normal : PokemonType("normal")
