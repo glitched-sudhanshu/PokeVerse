@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -79,28 +78,10 @@ fun PokemonListItem(
                     fontWeight = FontWeight.W700,
                     modifier = Modifier.basicMarquee().padding(16.dp)
                 )
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                Box(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 16.dp, end = 8.dp, bottom = 4.dp)
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        pokemon.types.forEach { type ->
-                            Text(
-                                text = type.type.name.capitalize(Locale.current),
-                                color = DesertWhite,
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.clip(RoundedCornerShape(100))
-                                    .background(Color.White.copy(.2f))
-                                    .padding(vertical = 2.dp, horizontal = 8.dp)
-                            )
-                        }
-                    }
-
-
                     var imageLoadResult by remember {
                         mutableStateOf<Result<Painter>?>(null)
                     }
@@ -123,12 +104,31 @@ fun PokemonListItem(
                                 painter = if (result.isSuccess) painter else painterResource(Res.drawable.open_pokeball),
                                 contentDescription = pokemon.name,
                                 contentScale = if (result.isSuccess) ContentScale.Crop else ContentScale.Fit,
-                                modifier = Modifier.sizeIn(
-                                    minWidth = 120.dp,
-                                    maxWidth = 300.dp,
-                                    minHeight = 120.dp,
-                                    maxHeight = 300.dp
-                                ).size(150.dp).align(Alignment.Bottom).padding(start = 12.dp),
+                                modifier = Modifier
+                                    .sizeIn(
+                                        minWidth = 120.dp,
+                                        maxWidth = 400.dp,
+                                        minHeight = 120.dp,
+                                        maxHeight = 400.dp
+                                    )
+                                    .size(150.dp)
+                                    .align(Alignment.BottomEnd).padding(start = 12.dp),
+                            )
+                        }
+                    }
+
+                    Column(
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        pokemon.types.forEach { type ->
+                            Text(
+                                text = type.type.name.capitalize(Locale.current),
+                                color = DesertWhite,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.clip(RoundedCornerShape(100))
+                                    .background(Color.White.copy(.2f))
+                                    .padding(vertical = 2.dp, horizontal = 8.dp)
                             )
                         }
                     }
