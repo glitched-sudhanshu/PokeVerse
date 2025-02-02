@@ -8,7 +8,9 @@ import org.example.pokeverse.pokedex.data.network.KtorRemotePokemonDataSource
 import org.example.pokeverse.pokedex.data.network.RemotePokemonDataSource
 import org.example.pokeverse.pokedex.data.repository.DefaultPokemonRepository
 import org.example.pokeverse.pokedex.domain.PokemonRepository
-import org.example.pokeverse.pokedex.presentation.pokemon_list.PokeDexViewModel
+import org.example.pokeverse.pokedex.presentation.PokeDexViewModel
+import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailViewModel
+import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListingViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -32,4 +34,6 @@ val sharedModule = module {
     single { get<FavoritePokemonDatabase>().favoritePokemonDao }
 
     viewModelOf(::PokeDexViewModel)
+    viewModelOf(::PokemonListingViewModel)
+    viewModelOf(::PokemonDetailViewModel)
 }

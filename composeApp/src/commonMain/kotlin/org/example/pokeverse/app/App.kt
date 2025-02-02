@@ -4,18 +4,23 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import org.example.pokeverse.pokedex.presentation.PokeDexViewModel
+import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailAction
 import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailScreenRoot
-import org.example.pokeverse.pokedex.presentation.pokemon_list.PokeDexViewModel
-import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListAction
+import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailViewModel
 import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListScreenRoot
+import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListingViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -35,12 +40,18 @@ fun App() {
                     exitTransition = { slideOutHorizontally() },
                     popEnterTransition = { slideInHorizontally() }
                 ) { backStackEntry ->
-                    val viewmodel =
+                    val sharedViewModel =
                         backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
+                    val viewmodel = koinViewModel<PokemonListingViewModel>()
+
+                    LaunchedEffect(true) {
+                        sharedViewModel.setSelectedPokemon(null)
+                    }
+
                     PokemonListScreenRoot(
-                        pokeDexViewModel = viewmodel,
+                        pokemonListingViewModel = viewmodel,
                         onPokemonClick = {
-                            viewmodel.onAction(PokemonListAction.OnPokemonClick(it))
+                            sharedViewModel.setSelectedPokemon(it)
                             navController.navigate(PokemonRoute.PokemonDetails)
                         }
                     )
@@ -56,9 +67,17 @@ fun App() {
                         slideOutHorizontally { initialOffset ->
                             initialOffset
                         }
-                    }) { backStackEntry ->
-                    val viewmodel =
+                    }
+                ) { backStackEntry ->
+                    val sharedViewModel =
                         backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
+                    val selectedPokemon by sharedViewModel.selectedPokemon.collectAsStateWithLifecycle()
+                    val viewmodel = koinViewModel<PokemonDetailViewModel>()
+                    LaunchedEffect(selectedPokemon) {
+                        selectedPokemon.pokemon?.let {
+                            viewmodel.onAction(PokemonDetailAction.OnSelectedPokemonChange(it))
+                        }
+                    }
                     PokemonDetailScreenRoot(
                         viewModel = viewmodel,
                         onBackClick = {

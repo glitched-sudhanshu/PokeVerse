@@ -7,8 +7,15 @@ import org.example.pokeverse.pokedex.domain.model.Stat
 import org.example.pokeverse.pokedex.domain.model.Type
 
 data class PokemonDetailsState(
-    val pokemon: Pokemon?
+    val pokemon: Pokemon?,
+    val isFavourite: IsFavourite = IsFavourite.Loading,
 )
+
+enum class IsFavourite {
+    Loading,
+    Yes,
+    No
+}
 
 
 val testPokemon = Pokemon(

@@ -7,7 +7,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -21,11 +20,10 @@ import org.example.pokeverse.core.domain.onError
 import org.example.pokeverse.core.domain.onSuccess
 import org.example.pokeverse.core.presentation.toUiText
 import org.example.pokeverse.pokedex.domain.PokemonRepository
-import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailsState
 import org.example.pokeverse.pokedex.presentation.pokemon_list.utils.AppConstants
 
 @OptIn(FlowPreview::class)
-class PokeDexViewModel(
+class PokemonListingViewModel(
     private val pokemonRepository: PokemonRepository
 ) : ViewModel() {
 
@@ -39,16 +37,9 @@ class PokeDexViewModel(
 
     private var searchPokemonJob: Job? = null
 
-    private val _selectedPokemon = MutableStateFlow(PokemonDetailsState(null))
-    val selectedPokemon = _selectedPokemon.asStateFlow()
-
     fun onAction(action: PokemonListAction) {
         when (action) {
-            is PokemonListAction.OnPokemonClick -> {
-                _selectedPokemon.update {
-                    it.copy(pokemon = action.pokemon)
-                }
-            }
+            is PokemonListAction.OnPokemonClick -> {}
 
             is PokemonListAction.OnSearchQueryChange -> {
                 _state.update {

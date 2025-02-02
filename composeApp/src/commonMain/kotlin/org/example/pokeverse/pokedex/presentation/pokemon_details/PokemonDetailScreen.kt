@@ -57,7 +57,6 @@ import org.example.pokeverse.core.presentation.DesertWhite
 import org.example.pokeverse.core.presentation.ImageWithLoader
 import org.example.pokeverse.pokedex.domain.model.Pokemon
 import org.example.pokeverse.pokedex.presentation.pokemon_details.components.PokemonStatItem
-import org.example.pokeverse.pokedex.presentation.pokemon_list.PokeDexViewModel
 import org.jetbrains.compose.resources.painterResource
 import pokeverse.composeapp.generated.resources.Res
 import pokeverse.composeapp.generated.resources.ic_pokeball
@@ -65,12 +64,11 @@ import pokeverse.composeapp.generated.resources.open_pokeball
 
 @Composable
 fun PokemonDetailScreenRoot(
-    viewModel: PokeDexViewModel,
+    viewModel: PokemonDetailViewModel,
     onBackClick: () -> Unit,
 ) {
-    val selectedPokemon by viewModel.selectedPokemon.collectAsStateWithLifecycle()
-
-    selectedPokemon.pokemon?.let { pokemon ->
+    val state by viewModel.pokemonDetailsState.collectAsStateWithLifecycle()
+    state.pokemon?.let { pokemon ->
         PokemonDetailScreen(
             pokemon = pokemon,
             onAction = {
