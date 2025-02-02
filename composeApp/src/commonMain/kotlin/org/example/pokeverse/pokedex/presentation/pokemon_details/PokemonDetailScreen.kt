@@ -1,5 +1,6 @@
 package org.example.pokeverse.pokedex.presentation.pokemon_details
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.InfiniteRepeatableSpec
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -12,6 +13,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,8 +29,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -63,6 +63,7 @@ import org.jetbrains.compose.resources.painterResource
 import pokeverse.composeapp.generated.resources.Res
 import pokeverse.composeapp.generated.resources.ic_pokeball
 import pokeverse.composeapp.generated.resources.open_pokeball
+import pokeverse.composeapp.generated.resources.pokeball_loading
 
 @Composable
 fun PokemonDetailScreenRoot(
@@ -126,21 +127,33 @@ fun PokemonDetailScreen(
                             },
                         colorFilter = ColorFilter.tint(Color.Black.copy(.8f))
                     )
-                    Image(
-                        imageVector = if (isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "back",
+                    AnimatedContent(
+                        targetState = isFavourite,
                         modifier = Modifier
                             .padding(12.dp)
-                            .size(32.dp)
-                            .padding(4.dp)
-                            .clip(CircleShape)
-                            .background(Color.White.copy(.5f))
-                            .align(Alignment.TopEnd)
-                            .clickable {
+                            .size(48.dp)
+                            .align(Alignment.BottomEnd)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
                                 onAction(PokemonDetailAction.OnFavouriteClick(pokemon))
-                            },
-                        colorFilter = ColorFilter.tint(Color.Black.copy(.8f))
-                    )
+                            }
+                    ) {
+                        if (it) {
+                            Image(
+                                painter = painterResource(Res.drawable.pokeball_loading),
+                                contentDescription = "is-favourite",
+                                modifier = Modifier.size(48.dp)
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(Res.drawable.open_pokeball),
+                                contentDescription = "is-favourite",
+                                modifier = Modifier.size(48.dp)
+                            )
+                        }
+                    }
                     val infiniteTransition = rememberInfiniteTransition()
                     val infiniteScale = infiniteTransition.animateFloat(
                         initialValue = .75f,
@@ -271,8 +284,8 @@ fun PokemonDetailScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
                     PokemonStatItem(
-                        label = "Weight",
-                        value = "${pokemon.weight} hg",
+                        label = "Species",
+                        value = pokemon.species.capitalize(),
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
