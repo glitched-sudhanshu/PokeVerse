@@ -1,6 +1,10 @@
 package org.example.pokeverse.pokedex.data.mappers
 
+import org.example.pokeverse.pokedex.data.database.entities.AbilityEntity
+import org.example.pokeverse.pokedex.data.database.entities.MoveEntity
 import org.example.pokeverse.pokedex.data.database.entities.PokemonEntity
+import org.example.pokeverse.pokedex.data.database.entities.StatEntity
+import org.example.pokeverse.pokedex.data.database.entities.TypeEntity
 import org.example.pokeverse.pokedex.data.dto.AbilityDto
 import org.example.pokeverse.pokedex.data.dto.MoveDto
 import org.example.pokeverse.pokedex.data.dto.PokemonDto
@@ -42,34 +46,50 @@ fun PokemonDto.toPokemon() = Pokemon(
     }
 )
 
+fun Ability.toAbilityEntity() = AbilityEntity(ability, slot)
+
+fun AbilityEntity.toAbility() = Ability(ability, slot)
+
+fun Move.toMoveEntity() = MoveEntity(move)
+
+fun MoveEntity.toMove() = Move(move)
+
+fun Type.toTypeEntity() = TypeEntity(slot, name)
+
+fun TypeEntity.toType() = Type(slot, name)
+
+fun Stat.toStatEntity() = StatEntity(baseStat, effort, stat)
+
+fun StatEntity.toStat() = Stat(baseStat, effort, stat)
+
 fun Pokemon.toPokemonEntity() = PokemonEntity(
-    abilities,
+    abilities.map { it.toAbilityEntity() },
     baseExperience,
     soundUrl,
     height,
     id,
-    moves,
+    moves.map { it.toMoveEntity() },
     name,
     species,
     imageUrl,
     gifUrl,
-    stats,
-    types,
+    stats.map { it.toStatEntity() },
+    types.map { it.toTypeEntity() },
     weight
 )
 
 fun PokemonEntity.toPokemon() = Pokemon(
-    abilities,
+    abilities.map { it.toAbility() },
     baseExperience,
     soundUrl,
     height,
     id,
-    moves,
+    moves.map { it.toMove() },
     name,
     species,
     imageUrl,
     gifUrl,
-    stats,
-    types,
+    stats.map { it.toStat() },
+    types.map { it.toType() },
     weight
 )
