@@ -52,7 +52,7 @@ fun App() {
                         pokemonListingViewModel = viewmodel,
                         onPokemonClick = {
                             sharedViewModel.setSelectedPokemon(it)
-                            navController.navigate(PokemonRoute.PokemonDetails)
+                            navController.navigate(PokemonRoute.PokemonDetails(it.id))
                         }
                     )
                 }
@@ -71,13 +71,16 @@ fun App() {
                 ) { backStackEntry ->
                     val sharedViewModel =
                         backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
-                    val selectedPokemon by sharedViewModel.selectedPokemon.collectAsStateWithLifecycle()
                     val viewmodel = koinViewModel<PokemonDetailViewModel>()
+
+                    val selectedPokemon by sharedViewModel.selectedPokemon.collectAsStateWithLifecycle()
+
                     LaunchedEffect(selectedPokemon) {
                         selectedPokemon.pokemon?.let {
                             viewmodel.onAction(PokemonDetailAction.OnSelectedPokemonChange(it))
                         }
                     }
+
                     PokemonDetailScreenRoot(
                         viewModel = viewmodel,
                         onBackClick = {
@@ -85,7 +88,6 @@ fun App() {
                         }
                     )
                 }
-
             }
         }
     }

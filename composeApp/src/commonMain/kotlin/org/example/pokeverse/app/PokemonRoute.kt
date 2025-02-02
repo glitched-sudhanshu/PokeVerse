@@ -10,5 +10,5 @@ sealed class PokemonRoute {
     data object PokemonListing : PokemonRoute()
 
     @Serializable
-    data object PokemonDetails : PokemonRoute()
+    data class PokemonDetails(val id: Int) : PokemonRoute()
 }

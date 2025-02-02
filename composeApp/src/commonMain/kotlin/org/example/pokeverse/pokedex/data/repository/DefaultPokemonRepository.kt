@@ -43,10 +43,11 @@ class DefaultPokemonRepository(
             }
     }
 
-    override fun isPokemonFavorite(id: String): Flow<Boolean> {
-        return flow {
-            emit(favouritePokemonDao.getFavoritePokemon(id) != null)
-        }
+    override fun isPokemonFavorite(id: Int): Flow<Boolean> {
+        return favouritePokemonDao.getFavoritePokemons()
+            .map { pokemons ->
+                pokemons.any { it.id == id }
+            }
     }
 
     override suspend fun markAsFavorite(pokemon: Pokemon): EmptyResult<DataError.Local> {
@@ -58,7 +59,7 @@ class DefaultPokemonRepository(
         }
     }
 
-    override suspend fun deleteFromFavorites(id: String): EmptyResult<DataError.Local> {
+    override suspend fun deleteFromFavorites(id: Int): EmptyResult<DataError.Local> {
         return try {
             favouritePokemonDao.deleteFavoritePokemon(id)
             Result.Success(Unit)

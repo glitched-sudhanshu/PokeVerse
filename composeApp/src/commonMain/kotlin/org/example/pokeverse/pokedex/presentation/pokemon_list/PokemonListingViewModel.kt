@@ -33,9 +33,11 @@ class PokemonListingViewModel(
             getPokemonListing()
             observeQueryChange()
         }
+        observeFavouritePokemons()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
 
     private var searchPokemonJob: Job? = null
+    private var observeFavouritePokemonsJob: Job? = null
 
     fun onAction(action: PokemonListAction) {
         when (action) {
@@ -93,6 +95,19 @@ class PokemonListingViewModel(
                     )
                 }
             }
+        }
+    }
+
+    private fun observeFavouritePokemons() {
+        observeFavouritePokemonsJob?.cancel()
+        observeFavouritePokemonsJob = viewModelScope.launch {
+            pokemonRepository.getFavoritePokemons()
+                .onEach { pokemons ->
+                    _state.update {
+                        it.copy(favouritePokemons = pokemons)
+                    }
+                }
+                .launchIn(viewModelScope)
         }
     }
 

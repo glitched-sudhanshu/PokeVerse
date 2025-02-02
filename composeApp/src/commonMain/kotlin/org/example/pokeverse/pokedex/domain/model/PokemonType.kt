@@ -1,5 +1,8 @@
 package org.example.pokeverse.pokedex.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 sealed class PokemonType(val name: String) {
     data object Normal : PokemonType("normal")
     data object Fighting : PokemonType("fighting")

@@ -17,9 +17,9 @@ interface FavoritePokemonDao {
     fun getFavoritePokemons(): Flow<List<PokemonEntity>>
 
     @Query("SELECT * FROM PokemonEntity WHERE id = :id")
-    suspend fun getFavoritePokemon(id: String): PokemonEntity?
+    suspend fun getFavoritePokemon(id: Int): PokemonEntity?
 
     @Query("DELETE FROM PokemonEntity WHERE id = :id")
-    suspend fun deleteFavoritePokemon(id: String)
+    suspend fun deleteFavoritePokemon(id: Int)
 
 }

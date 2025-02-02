@@ -27,6 +27,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -71,6 +73,7 @@ fun PokemonDetailScreenRoot(
     state.pokemon?.let { pokemon ->
         PokemonDetailScreen(
             pokemon = pokemon,
+            isFavourite = state.isFavourite,
             onAction = {
                 when (it) {
                     PokemonDetailAction.OnBackClick -> {
@@ -78,7 +81,7 @@ fun PokemonDetailScreenRoot(
                     }
 
                     else -> {
-
+                        viewModel.onAction(it)
                     }
                 }
             }
@@ -89,6 +92,7 @@ fun PokemonDetailScreenRoot(
 @Composable
 fun PokemonDetailScreen(
     pokemon: Pokemon,
+    isFavourite: Boolean,
     onAction: (PokemonDetailAction) -> Unit
 ) {
     Scaffold { internalPadding ->
@@ -119,6 +123,21 @@ fun PokemonDetailScreen(
                             .align(Alignment.TopStart)
                             .clickable {
                                 onAction(PokemonDetailAction.OnBackClick)
+                            },
+                        colorFilter = ColorFilter.tint(Color.Black.copy(.8f))
+                    )
+                    Image(
+                        imageVector = if (isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "back",
+                        modifier = Modifier
+                            .padding(12.dp)
+                            .size(32.dp)
+                            .padding(4.dp)
+                            .clip(CircleShape)
+                            .background(Color.White.copy(.5f))
+                            .align(Alignment.TopEnd)
+                            .clickable {
+                                onAction(PokemonDetailAction.OnFavouriteClick(pokemon))
                             },
                         colorFilter = ColorFilter.tint(Color.Black.copy(.8f))
                     )

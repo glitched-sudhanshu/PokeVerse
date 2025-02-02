@@ -17,7 +17,7 @@ interface PokemonRepository {
     ): Result<Pokemon, DataError.Remote>
     
     fun getFavoritePokemons(): Flow<List<Pokemon>>
-    fun isPokemonFavorite(id: String): Flow<Boolean>
+    fun isPokemonFavorite(id: Int): Flow<Boolean>
     suspend fun markAsFavorite(pokemon: Pokemon): EmptyResult<DataError.Local>
-    suspend fun deleteFromFavorites(id: String): EmptyResult<DataError.Local>
+    suspend fun deleteFromFavorites(id: Int): EmptyResult<DataError.Local>
 }
