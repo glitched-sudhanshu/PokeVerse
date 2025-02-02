@@ -53,12 +53,14 @@ fun PokemonList(
                 )
             }
         }
-        itemsIndexed(pokemons, key = { _, pokemon -> pokemon.id }) { index, pokemon ->
+        itemsIndexed(
+            pokemons,
+            key = { index, pokemon -> "$index${pokemon.id}" }) { index, pokemon ->
             if (index >= pokemons.size - 1) {
                 loadNextPagePokemons()
             }
             PokemonListItem(
-                modifier = modifier.widthIn(400.dp).fillMaxWidth(),
+                modifier = modifier.widthIn(400.dp).fillMaxWidth().animateItem(),
                 pokemon = pokemon,
                 onClick = onClick,
             )

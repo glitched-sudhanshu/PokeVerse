@@ -222,7 +222,11 @@ fun PokemonListScreen(
                                                 modifier = Modifier.fillMaxSize(),
                                                 listState = pokemonsListState,
                                                 isNextPageLoading = state.isNextPageLoading,
-                                                loadNextPagePokemons = loadNextPagePokemons
+                                                loadNextPagePokemons = {
+                                                    if (state.searchQuery.isNullOrBlank() && !state.isLoading && !state.isNextPageLoading) {
+                                                        loadNextPagePokemons()
+                                                    }
+                                                }
                                             )
                                         }
                                     }

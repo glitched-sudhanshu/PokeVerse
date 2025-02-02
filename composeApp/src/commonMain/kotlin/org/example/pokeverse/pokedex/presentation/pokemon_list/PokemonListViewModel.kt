@@ -3,9 +3,16 @@ package org.example.pokeverse.pokedex.presentation.pokemon_list
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -17,6 +24,7 @@ import org.example.pokeverse.pokedex.domain.PokemonRepository
 import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailsState
 import org.example.pokeverse.pokedex.presentation.pokemon_list.utils.AppConstants
 
+@OptIn(FlowPreview::class)
 class PokemonListViewModel(
     private val pokemonRepository: PokemonRepository
 ) : ViewModel() {
@@ -25,8 +33,11 @@ class PokemonListViewModel(
     val state = _state.onStart {
         if (_state.value.pokemonsListing.isEmpty()) {
             getPokemonListing()
+            observeQueryChange()
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
+
+    private var searchPokemonJob: Job? = null
 
     private val _selectedPokemon = MutableStateFlow(PokemonDetailsState(null))
     val selectedPokemon = _selectedPokemon.asStateFlow()
@@ -60,7 +71,7 @@ class PokemonListViewModel(
 
     fun getPokemonListing() {
         viewModelScope.launch {
-            if (endReached.value) {
+            if (endReached.value || !_state.value.searchQuery.isNullOrBlank()) {
                 return@launch
             }
             _state.update {
@@ -91,6 +102,37 @@ class PokemonListViewModel(
                     )
                 }
             }
+        }
+    }
+
+    private fun observeQueryChange() {
+        viewModelScope.launch {
+            _state
+                .map { it.searchQuery }
+                .distinctUntilChanged()
+                .debounce(500L)
+                .onEach { query ->
+                    when {
+                        query.isNullOrBlank() -> {}
+
+                        else -> {
+                            searchPokemonJob?.cancel()
+                            searchPokemonJob = searchPokemons(query)
+                        }
+                    }
+                }
+                .launchIn(viewModelScope)
+        }
+    }
+
+    private fun searchPokemons(query: String) = viewModelScope.launch {
+        _state.update {
+            it.copy(isLoading = true, isNextPageLoading = false, searchResult = emptyList())
+        }
+        val searchResults =
+            _state.value.pokemonsListing.filter { it.name.lowercase().contains(query.lowercase()) }
+        _state.update {
+            it.copy(isLoading = false, isNextPageLoading = false, searchResult = searchResults)
         }
     }
 }
