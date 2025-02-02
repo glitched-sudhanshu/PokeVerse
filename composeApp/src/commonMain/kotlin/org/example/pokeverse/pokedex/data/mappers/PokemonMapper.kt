@@ -57,3 +57,19 @@ fun Pokemon.toPokemonEntity() = PokemonEntity(
     types,
     weight
 )
+
+fun PokemonEntity.toPokemon() = Pokemon(
+    abilities,
+    baseExperience,
+    soundUrl,
+    height,
+    id,
+    moves,
+    name,
+    species,
+    imageUrl,
+    gifUrl,
+    stats,
+    types,
+    weight
+)
