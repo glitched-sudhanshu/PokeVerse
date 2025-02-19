@@ -2,17 +2,27 @@ package org.example.pokeverse.app
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import org.example.pokeverse.pokedex.presentation.PokeDexViewModel
@@ -29,64 +39,103 @@ import org.koin.compose.viewmodel.koinViewModel
 fun App() {
     MaterialTheme {
         val navController = rememberNavController()
-        NavHost(
-            navController = navController,
-            startDestination = PokemonRoute.PokemonNavGraph
-        ) {
-            navigation<PokemonRoute.PokemonNavGraph>(
-                startDestination = PokemonRoute.PokemonListing
-            ) {
-                composable<PokemonRoute.PokemonListing>(
-                    exitTransition = { slideOutHorizontally() },
-                    popEnterTransition = { slideInHorizontally() }
-                ) { backStackEntry ->
-                    val sharedViewModel =
-                        backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
-                    val viewmodel = koinViewModel<PokemonListingViewModel>()
+        Scaffold(
+            floatingActionButton = {
+                val currentBackStackEntry by navController.currentBackStackEntryFlow.collectAsStateWithLifecycle(
+                    initialValue = null
+                )
+                val currentRoute = currentBackStackEntry?.destination?.route
 
-                    LaunchedEffect(true) {
-                        sharedViewModel.setSelectedPokemon(null)
-                    }
+                LaunchedEffect(currentRoute) {
 
-                    PokemonListScreenRoot(
-                        pokemonListingViewModel = viewmodel,
-                        onPokemonClick = {
-                            sharedViewModel.setSelectedPokemon(it)
-                            navController.navigate(PokemonRoute.PokemonDetails(it.id))
-                        }
-                    )
+                    println("if statement ${listOf(
+                        PokedexRoute.PokemonListing.toString(),
+                        PokedexRoute.PokemonDetails::class.qualifiedName
+                    ).any { currentRoute?.contains(it ?: "") == true }}")
+
+                    println("normal val ${PokedexRoute.PokemonListing.toString()}  ${PokedexRoute.PokemonDetails::class.qualifiedName}")
+
+                    println("screen ${currentRoute}")
                 }
 
-                composable<PokemonRoute.PokemonDetails>(
-                    enterTransition = {
-                        slideInHorizontally { initialOffset ->
-                            initialOffset
-                        }
-                    },
-                    exitTransition = {
-                        slideOutHorizontally { initialOffset ->
-                            initialOffset
-                        }
+                if (listOf(
+                        PokedexRoute.PokemonListing.toString(),
+                        PokedexRoute.PokemonDetails::class.qualifiedName
+                    ).any { currentRoute?.contains(it ?: "") == true }
+                ) {
+                    FloatingActionButton(
+                        onClick = {
+                            navController.navigate("specialFeatureEntry")
+                        },
+                        shape = CircleShape,
+                        containerColor = Color.Red,
+                        contentColor = Color.White
+                    ) {
+                        Icon(Icons.Default.Star, contentDescription = "Special Feature")
                     }
-                ) { backStackEntry ->
-                    val sharedViewModel =
-                        backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
-                    val viewmodel = koinViewModel<PokemonDetailViewModel>()
+                }
+            }
+        ) { internalPadding ->
+            NavHost(
+                navController = navController,
+                startDestination = PokemonMainRoute.PokemonListingNavGraph,
+                modifier = Modifier.padding(internalPadding)
+            ) {
+                navigation<PokemonMainRoute.PokemonListingNavGraph>(
+                    startDestination = PokedexRoute.PokemonListing
+                ) {
+                    composable<PokedexRoute.PokemonListing>(
+                        exitTransition = { slideOutHorizontally() },
+                        popEnterTransition = { slideInHorizontally() }
+                    ) { backStackEntry ->
+                        val sharedViewModel =
+                            backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
+                        val viewmodel = koinViewModel<PokemonListingViewModel>()
 
-                    val selectedPokemon by sharedViewModel.selectedPokemon.collectAsStateWithLifecycle()
-
-                    LaunchedEffect(selectedPokemon) {
-                        selectedPokemon.pokemon?.let {
-                            viewmodel.onAction(PokemonDetailAction.OnSelectedPokemonChange(it))
+                        LaunchedEffect(true) {
+                            sharedViewModel.setSelectedPokemon(null)
                         }
+
+                        PokemonListScreenRoot(
+                            pokemonListingViewModel = viewmodel,
+                            onPokemonClick = {
+                                sharedViewModel.setSelectedPokemon(it)
+                                navController.navigate(PokedexRoute.PokemonDetails(it.id))
+                            }
+                        )
                     }
 
-                    PokemonDetailScreenRoot(
-                        viewModel = viewmodel,
-                        onBackClick = {
-                            navController.popBackStack()
+                    composable<PokedexRoute.PokemonDetails>(
+                        enterTransition = {
+                            slideInHorizontally { initialOffset ->
+                                initialOffset
+                            }
+                        },
+                        exitTransition = {
+                            slideOutHorizontally { initialOffset ->
+                                initialOffset
+                            }
                         }
-                    )
+                    ) { backStackEntry ->
+                        val sharedViewModel =
+                            backStackEntry.sharedKoinViewModel<PokeDexViewModel>(navController)
+                        val viewmodel = koinViewModel<PokemonDetailViewModel>()
+
+                        val selectedPokemon by sharedViewModel.selectedPokemon.collectAsStateWithLifecycle()
+
+                        LaunchedEffect(selectedPokemon) {
+                            selectedPokemon.pokemon?.let {
+                                viewmodel.onAction(PokemonDetailAction.OnSelectedPokemonChange(it))
+                            }
+                        }
+
+                        PokemonDetailScreenRoot(
+                            viewModel = viewmodel,
+                            onBackClick = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
                 }
             }
         }

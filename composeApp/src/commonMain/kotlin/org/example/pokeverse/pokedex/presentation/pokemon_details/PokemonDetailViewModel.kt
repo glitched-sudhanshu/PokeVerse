@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.pokeverse.app.PokemonRoute
+import org.example.pokeverse.app.PokedexRoute
 import org.example.pokeverse.pokedex.domain.PokemonRepository
 
 class PokemonDetailViewModel(
     private val repository: PokemonRepository, savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val pokemonId = savedStateHandle.toRoute<PokemonRoute.PokemonDetails>().id
+    private val pokemonId = savedStateHandle.toRoute<PokedexRoute.PokemonDetails>().id
 
     private val _pokemonDetailsState = MutableStateFlow(PokemonDetailsState(pokemon = null))
     val pokemonDetailsState = _pokemonDetailsState.onStart {
