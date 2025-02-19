@@ -20,5 +20,9 @@ sealed class PokedexRoute : PokemonMainRoute() {
 
 
 sealed class ArenaRoute : PokemonMainRoute() {
+    @Serializable
+    data object BackgroundSelection : ArenaRoute()
 
+    @Serializable
+    data class BattleGround(val id: Int) : ArenaRoute()
 }

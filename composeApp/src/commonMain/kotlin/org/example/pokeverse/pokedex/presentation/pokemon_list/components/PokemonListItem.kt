@@ -3,7 +3,6 @@ package org.example.pokeverse.pokedex.presentation.pokemon_list.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
 import getPokemonTypeColor
 import org.example.pokeverse.core.presentation.DesertWhite
+import org.example.pokeverse.core.presentation.clickableSingle
 import org.example.pokeverse.pokedex.domain.model.Pokemon
 import org.jetbrains.compose.resources.painterResource
 import pokeverse.composeapp.generated.resources.Res
@@ -51,7 +51,7 @@ fun PokemonListItem(
 ) {
     Surface(
         shape = RoundedCornerShape(32.dp),
-        modifier = modifier.clip(RoundedCornerShape(32.dp)).clickable { onClick(pokemon) },
+        modifier = modifier.clip(RoundedCornerShape(32.dp)).clickableSingle { onClick(pokemon) },
         color = getPokemonTypeColor(
             pokemon.types.getOrNull(0)?.pokemonType
         )
