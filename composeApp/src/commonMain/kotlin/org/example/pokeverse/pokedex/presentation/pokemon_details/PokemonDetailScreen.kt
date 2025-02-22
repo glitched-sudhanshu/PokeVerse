@@ -132,7 +132,7 @@ fun PokemonDetailScreen(
                             .padding(12.dp)
                             .size(48.dp)
                             .align(Alignment.BottomEnd)
-                            .clickableSingle(false) {
+                            .clickableSingle(ripple = false) {
                                 onAction(PokemonDetailAction.OnFavouriteClick(pokemon))
                             }
                     ) {
