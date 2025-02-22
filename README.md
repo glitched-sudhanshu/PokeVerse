@@ -18,12 +18,17 @@ about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform
 Architecture: MVI
 Presentation -> Domain <- Data
 
-Pipeline -> Move loader to lottie
-Download comic books for pokemon
-Play 1v1 multiplayer game
-Audio and gif of the pokemon
+Todos:
 
-Bugs to fix:
-
-1. In listing screen, when in favourite section, on back press it should move to first section.
+1. Move loader to lottie
+2. Download comic books for pokemon
+3. Play 1v1 multiplayer game
+4. Audio and gif of the pokemon
+5. In listing screen, when in favourite section, on back press it should move to first section.
    Currently, the app closes on back press in favourite section.
+6. For the special action button in 1v1, change its implementation to bitmap to reduce
+   recomposition (refer PokeVerse repo)
+7. Refactor all the hardcoded actions in one place
+8. Hoist game over screen
+9. Like is not working
+10. Center loader while loading next page
