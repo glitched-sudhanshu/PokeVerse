@@ -27,6 +27,9 @@ import kotlinx.coroutines.delay
 import org.example.pokeverse.app.LocalNavController
 import org.example.pokeverse.arena.data.Action
 import org.example.pokeverse.arena.data.Direction
+import org.example.pokeverse.arena.presentation.components.ActionButton
+import org.example.pokeverse.arena.presentation.components.AttackAnimation
+import org.example.pokeverse.arena.presentation.components.ExplodePokemon
 import org.example.pokeverse.core.presentation.ImageWithLoader
 import org.example.pokeverse.core.presentation.clickableSingle
 import org.example.pokeverse.core.presentation.currentTime

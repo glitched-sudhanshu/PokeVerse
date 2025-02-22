@@ -3,7 +3,7 @@ package org.example.pokeverse.previews.arena.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import org.example.pokeverse.arena.data.Action
-import org.example.pokeverse.arena.presentation.ActionButton
+import org.example.pokeverse.arena.presentation.components.ActionButton
 
 @Preview
 @Composable

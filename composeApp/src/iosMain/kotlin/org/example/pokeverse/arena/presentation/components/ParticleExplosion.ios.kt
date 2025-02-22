@@ -1,4 +1,4 @@
-package org.example.pokeverse.arena.presentation
+package org.example.pokeverse.arena.presentation.components
 
 import platform.UIKit.UIScreen
 

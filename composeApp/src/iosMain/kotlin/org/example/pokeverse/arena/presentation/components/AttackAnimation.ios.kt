@@ -1,4 +1,4 @@
-package org.example.pokeverse.arena.presentation
+package org.example.pokeverse.arena.presentation.components
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.CoreGraphics.CGRectGetWidth

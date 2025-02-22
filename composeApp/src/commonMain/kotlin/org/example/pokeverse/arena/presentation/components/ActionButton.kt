@@ -1,4 +1,4 @@
-package org.example.pokeverse.arena.presentation
+package org.example.pokeverse.arena.presentation.components
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
