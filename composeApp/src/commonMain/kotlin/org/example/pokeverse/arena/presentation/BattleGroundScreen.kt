@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -38,16 +39,12 @@ fun RootBattleGroundScreen(
     modifier: Modifier = Modifier,
     viewModel: ArenaViewModel,
 ) {
-    //rotate the screen
-//    val context = LocalContext.current
-//
-//    DisposableEffect(Unit) {
-//        val activity = context as? Activity
-//        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-//        onDispose {
-//            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//        }
-//    }
+    DisposableEffect(Unit) {
+        setScreenOrientationLandscape()
+        onDispose {
+            setScreenOrientationPortrait()
+        }
+    }
 
     val arenaState by viewModel.arenaState.collectAsStateWithLifecycle()
     val navController = LocalNavController.current
@@ -66,7 +63,6 @@ fun RootBattleGroundScreen(
         }
     )
 }
-
 
 @Composable
 fun BattleGroundScreen(
@@ -272,3 +268,7 @@ fun BattleGroundScreen(
         }
     }
 }
+
+expect fun setScreenOrientationLandscape()
+
+expect fun setScreenOrientationPortrait()

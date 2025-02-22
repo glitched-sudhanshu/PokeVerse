@@ -8,6 +8,7 @@ class PokeVerseApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        registerActivityLifecycleCallbacks(ActivityHolder)
         initKoin {
             androidContext(this@PokeVerseApplication)
         }
