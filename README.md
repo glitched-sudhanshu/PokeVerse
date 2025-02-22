@@ -30,5 +30,4 @@ Todos:
    recomposition (refer PokeVerse repo)
 7. Refactor all the hardcoded actions in one place
 8. Hoist game over screen
-9. Like is not working
-10. Center loader while loading next page
+9. Center loader while loading next page
