@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
@@ -89,8 +90,7 @@ fun BattleGroundScreen(
                                 Action.Attack(
                                     timestamp = currentTime.toString(),
                                     image = "https://png.pngtree.com/png-vector/20231119/ourmid/pngtree-water-wave-isolated-on-transparent-background-png-image_10668832.png",
-                                    metaData =
-                                    Action.MetaData(
+                                    metaData = Action.MetaData(
                                         primaryColor = 0xFF03ADFC,
                                         secondaryColor = 0xFF034AFC,
                                     ),
@@ -126,11 +126,11 @@ fun BattleGroundScreen(
 
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(24.dp)) {
             AnimatedContent(
-                targetState = arenaState.firstPlayerHealth,
+                targetState = arenaState.firstPlayerHealth > 0,
                 label = "",
                 modifier = Modifier.align(Alignment.BottomStart),
             ) { health ->
-                if (health > 0) {
+                if (health) {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         ActionButton(
                             action = Action.SpecialAttack(
@@ -150,14 +150,16 @@ fun BattleGroundScreen(
                                     )
                                 )
                             },
+                            modifier = Modifier.size(100.dp),
                             isActive = arenaState.firstPlayerHasSpecialAttack,
                         )
                         ImageWithLoader(
                             model = arenaState.firstPlayer,
                             contentDescription = "first-player",
+                            contentScale = ContentScale.Fit,
                             fallbackPainter = painterResource(Res.drawable.pokeball_loading),
                             modifier = Modifier
-                                .size(width = 70.dp, height = 120.dp)
+                                .size(width = 100.dp, height = 140.dp)
                                 .graphicsLayer { rotationY = -180f },
                             loadingUi = null,
                         )
@@ -167,15 +169,14 @@ fun BattleGroundScreen(
                 }
             }
             AnimatedContent(
-                targetState = arenaState.secondPlayerHealth,
+                targetState = arenaState.secondPlayerHealth > 0,
                 label = "",
                 modifier = Modifier.align(Alignment.BottomEnd),
             ) { health ->
-                if (health > 0) {
+                if (health) {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         ActionButton(
-                            action =
-                            Action.SpecialAttack(
+                            action = Action.SpecialAttack(
                                 timestamp = currentTime.toString(),
                                 image = "https://png.pngtree.com/png-vector/20240202/ourmid/pngtree-yellow-ball-lightning-abstract-electric-lightning-strike-light-flash-thunder-spark-png-image_11531017.png",
                                 metaData = Action.MetaData(
@@ -188,15 +189,16 @@ fun BattleGroundScreen(
                             onPerform = {
                                 onAction(ArenaAction.EnqueueSecondPlayerAction(it))
                             },
-                            modifier = Modifier,
+                            modifier = Modifier.size(100.dp),
                             isActive = arenaState.secondPlayerHasSpecialAttack,
                         )
                         ImageWithLoader(
                             model = arenaState.secondPlayer,
                             contentDescription = "second-player",
                             fallbackPainter = painterResource(Res.drawable.pokeball_loading),
+                            contentScale = ContentScale.Fit,
                             modifier = Modifier
-                                .size(width = 70.dp, height = 120.dp),
+                                .size(width = 100.dp, height = 140.dp),
                             loadingUi = null,
                         )
                     }

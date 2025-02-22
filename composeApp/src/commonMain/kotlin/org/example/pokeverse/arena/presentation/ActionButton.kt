@@ -69,7 +69,7 @@ fun ActionButton(
             ),
             label = "",
         )
-    Box(modifier = modifier.clickableSingle(ripple = false) { onPerform(action) }) {
+    Box(modifier = modifier.clickableSingle(ripple = false) { if (isActive) onPerform(action) }) {
         ImageWithLoader(
             modifier = Modifier.padding(4.dp),
             model = action.image,

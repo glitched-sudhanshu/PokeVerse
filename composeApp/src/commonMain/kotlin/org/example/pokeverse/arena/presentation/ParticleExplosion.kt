@@ -37,29 +37,29 @@ fun ExplodePokemon() {
     Explosion(progress)
 }
 
+private val sizeDp = 200.dp
+private val sizePx = sizeDp.toPx()
+private val sizePxHalf = sizePx / 2
+private val particles = List(150) {
+    Particle(
+        color = Color(
+            listOf(
+                0xFFEA4335,
+                0xff4285f4,
+                0xfffbbc05,
+                0xff34a853
+            ).random()
+        ),
+        startXPosition = sizePxHalf.toInt(),
+        startYPosition = sizePxHalf.toInt(),
+        maxHorizontalDisplacement = sizePx * randomInRange(-0.9f, 0.9f),
+        maxVerticalDisplacement = sizePx * randomInRange(0.2f, 0.38f)
+    )
+}
+
+
 @Composable
 fun Explosion(progress: Float) {
-    val sizeDp = 200.dp
-    val sizePx = sizeDp.toPx()
-    val sizePxHalf = sizePx / 2
-    val particles = remember {
-        List(150) {
-            Particle(
-                color = Color(
-                    listOf(
-                        0xFFEA4335,
-                        0xff4285f4,
-                        0xfffbbc05,
-                        0xff34a853
-                    ).random()
-                ),
-                startXPosition = sizePxHalf.toInt(),
-                startYPosition = sizePxHalf.toInt(),
-                maxHorizontalDisplacement = sizePx * randomInRange(-0.9f, 0.9f),
-                maxVerticalDisplacement = sizePx * randomInRange(0.2f, 0.38f)
-            )
-        }
-    }
     particles.forEach { it.updateProgress(progress) }
 
     Canvas(
@@ -131,12 +131,12 @@ class Particle(
     }
 }
 
-fun Float.mapInRange(inMin: Float, inMax: Float, outMin: Float, outMax: Float): Float {
+private fun Float.mapInRange(inMin: Float, inMax: Float, outMin: Float, outMax: Float): Float {
     return outMin + (((this - inMin) / (inMax - inMin)) * (outMax - outMin))
 }
 
 fun Int.dpToPx() = toFloat().dpToPx()
-fun Dp.toPx() = value.dpToPx()
+private fun Dp.toPx() = value.dpToPx()
 
 expect fun Float.dpToPx(): Float
 

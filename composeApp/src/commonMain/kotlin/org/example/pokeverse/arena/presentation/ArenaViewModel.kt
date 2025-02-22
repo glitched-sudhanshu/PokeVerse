@@ -107,8 +107,8 @@ class ArenaViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                                 it.firstPlayerActions.toMutableList()
                             firstPlayerActions.remove(arenaAction.action)
                             val secondPlayerHealth =
-                                if (arenaAction is Action.Attack && it.firstPlayerHealth > 0) {
-                                    it.secondPlayerHealth - arenaAction.damage
+                                if (arenaAction.action is Action.Attack && it.firstPlayerHealth > 0) {
+                                    it.secondPlayerHealth - arenaAction.action.damage
                                 } else {
                                     it.secondPlayerHealth
                                 }
@@ -116,6 +116,7 @@ class ArenaViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                                 firstPlayerActions = firstPlayerActions,
                                 secondPlayerHealth = secondPlayerHealth,
                                 secondPlayerHasSpecialAttack = secondPlayerHealth < 50,
+                                gameOver = secondPlayerHealth <= 0 || it.firstPlayerHealth <= 0
                             )
                         }
                     }
@@ -130,8 +131,8 @@ class ArenaViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                                 it.secondPlayerActions.toMutableList()
                             secondPlayerActions.remove(arenaAction.action)
                             val firstPlayerHealth =
-                                if (arenaAction is Action.Attack && it.secondPlayerHealth > 0) {
-                                    it.firstPlayerHealth - arenaAction.damage
+                                if (arenaAction.action is Action.Attack && it.secondPlayerHealth > 0) {
+                                    it.firstPlayerHealth - arenaAction.action.damage
                                 } else {
                                     it.firstPlayerHealth
                                 }
@@ -139,6 +140,7 @@ class ArenaViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                                 secondPlayerActions = secondPlayerActions,
                                 firstPlayerHealth = firstPlayerHealth,
                                 firstPlayerHasSpecialAttack = firstPlayerHealth < 50,
+                                gameOver = firstPlayerHealth <= 0 || it.secondPlayerHealth <= 0
                             )
                         }
                     }

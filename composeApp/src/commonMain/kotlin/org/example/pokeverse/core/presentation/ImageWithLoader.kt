@@ -23,6 +23,7 @@ fun ImageWithLoader(
     contentDescription: String?,
     modifier: Modifier = Modifier,
     colorFilter: ColorFilter? = null,
+    contentScale: ContentScale = ContentScale.Crop,
     loadingUi: @Composable (() -> Unit)? = { CircularProgressIndicator() },
 ) {
     var imageLoadResult by remember {
@@ -59,7 +60,7 @@ fun ImageWithLoader(
                 contentDescription = contentDescription,
                 modifier = modifier,
                 contentScale = if (result.isSuccess) {
-                    ContentScale.Crop
+                    contentScale
                 } else {
                     ContentScale.Fit
                 },
