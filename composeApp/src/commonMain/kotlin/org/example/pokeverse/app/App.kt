@@ -2,37 +2,44 @@ package org.example.pokeverse.app
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import org.example.pokeverse.arena.presentation.ArenaViewModel
+import org.example.pokeverse.arena.presentation.RootBattleGroundScreen
 import org.example.pokeverse.pokedex.presentation.PokeDexViewModel
 import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailAction
 import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailScreenRoot
 import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailViewModel
 import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListScreenRoot
 import org.example.pokeverse.pokedex.presentation.pokemon_list.PokemonListingViewModel
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import pokeverse.composeapp.generated.resources.Res
+import pokeverse.composeapp.generated.resources.ic_pokemon_battle
 
 @Composable
 @Preview
@@ -46,18 +53,6 @@ fun App() {
                 )
                 val currentRoute = currentBackStackEntry?.destination?.route
 
-                LaunchedEffect(currentRoute) {
-
-                    println("if statement ${listOf(
-                        PokedexRoute.PokemonListing.toString(),
-                        PokedexRoute.PokemonDetails::class.qualifiedName
-                    ).any { currentRoute?.contains(it ?: "") == true }}")
-
-                    println("normal val ${PokedexRoute.PokemonListing.toString()}  ${PokedexRoute.PokemonDetails::class.qualifiedName}")
-
-                    println("screen ${currentRoute}")
-                }
-
                 if (listOf(
                         PokedexRoute.PokemonListing.toString(),
                         PokedexRoute.PokemonDetails::class.qualifiedName
@@ -65,13 +60,17 @@ fun App() {
                 ) {
                     FloatingActionButton(
                         onClick = {
-                            navController.navigate("specialFeatureEntry")
+                            navController.navigate(PokemonMainRoute.PokemonArenaNavGraph)
                         },
                         shape = CircleShape,
-                        containerColor = Color.Red,
+                        containerColor = Color.White,
                         contentColor = Color.White
                     ) {
-                        Icon(Icons.Default.Star, contentDescription = "Special Feature")
+                        Image(
+                            painter = painterResource(Res.drawable.ic_pokemon_battle),
+                            contentDescription = "Special Feature",
+                            modifier = Modifier.size(48.dp)
+                        )
                     }
                 }
             }
@@ -137,9 +136,31 @@ fun App() {
                         )
                     }
                 }
+
+                navigation<PokemonMainRoute.PokemonArenaNavGraph>(
+                    startDestination = ArenaRoute.BattleGround(
+                        ground = "https://i.pinimg.com/originals/e9/55/5b/e9555b52cf2e05d1e0e8a5fb6001d6ed.jpg",
+                        firstPlayer = "https://static.wikia.nocookie.net/project-pokemon/images/3/3c/250px-007Squirtle.png/revision/latest/thumbnail/width/360/height/360?cb=20160917031328",
+                        secondPlayer = "https://unite.pokemon.com/images/pokemon/pikachu/stat/stat-pikachu.png"
+                    )
+                ) {
+                    composable<ArenaRoute.BattleGround> {
+                        val arenaViewModel = koinViewModel<ArenaViewModel>()
+                        CompositionLocalProvider(LocalNavController provides navController) {
+                            RootBattleGroundScreen(
+                                modifier = Modifier.fillMaxSize(),
+                                viewModel = arenaViewModel,
+                            )
+                        }
+                    }
+                }
             }
         }
     }
+}
+
+val LocalNavController = staticCompositionLocalOf<NavController> {
+    error("No NavController provided")
 }
 
 @Composable

@@ -24,5 +24,6 @@ sealed class ArenaRoute : PokemonMainRoute() {
     data object BackgroundSelection : ArenaRoute()
 
     @Serializable
-    data class BattleGround(val id: Int) : ArenaRoute()
+    data class BattleGround(val ground: String, val firstPlayer: String, val secondPlayer: String) :
+        ArenaRoute()
 }

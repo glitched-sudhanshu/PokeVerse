@@ -3,6 +3,7 @@ package org.example.pokeverse.core.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.rememberAsyncImagePainter
@@ -20,7 +22,8 @@ fun ImageWithLoader(
     fallbackPainter: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    loadingUi: @Composable () -> Unit = { CircularProgressIndicator() },
+    colorFilter: ColorFilter? = null,
+    loadingUi: @Composable (() -> Unit)? = { CircularProgressIndicator() },
 ) {
     var imageLoadResult by remember {
         mutableStateOf<Result<Painter>?>(null)
@@ -44,7 +47,9 @@ fun ImageWithLoader(
     when (val result = imageLoadResult) {
         null -> {
             Box(modifier, contentAlignment = Alignment.Center) {
-                loadingUi()
+                if (loadingUi != null) {
+                    loadingUi()
+                }
             }
         }
 
@@ -58,6 +63,7 @@ fun ImageWithLoader(
                 } else {
                     ContentScale.Fit
                 },
+                colorFilter = colorFilter
             )
         }
     }

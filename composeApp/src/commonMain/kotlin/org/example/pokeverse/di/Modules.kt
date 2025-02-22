@@ -1,6 +1,7 @@
 package org.example.pokeverse.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import org.example.pokeverse.arena.presentation.ArenaViewModel
 import org.example.pokeverse.core.data.HttpClientFactory
 import org.example.pokeverse.pokedex.data.database.DatabaseFactory
 import org.example.pokeverse.pokedex.data.database.FavoritePokemonDatabase
@@ -36,4 +37,5 @@ val sharedModule = module {
     viewModelOf(::PokeDexViewModel)
     viewModelOf(::PokemonListingViewModel)
     viewModelOf(::PokemonDetailViewModel)
+    viewModelOf(::ArenaViewModel)
 }
