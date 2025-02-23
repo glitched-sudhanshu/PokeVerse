@@ -2,6 +2,7 @@ package org.example.pokeverse.pokedex.presentation.pokemon_list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,9 +39,13 @@ fun PokemonList(
         columns = GridCells.Fixed(2),
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxSize()
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = if (pokemons.isEmpty()) Arrangement.spacedBy(
+            12.dp,
+            Alignment.CenterVertically
+        ) else Arrangement.spacedBy(12.dp)
     ) {
         if (pokemons.isEmpty()) {
             item(span = {
@@ -66,7 +72,9 @@ fun PokemonList(
             )
         }
         if (isNextPageLoading) {
-            item {
+            item(span = {
+                GridItemSpan(2)
+            }) {
                 Image(
                     painter = painterResource(Res.drawable.pokeball_loading),
                     contentDescription = "page-loader",

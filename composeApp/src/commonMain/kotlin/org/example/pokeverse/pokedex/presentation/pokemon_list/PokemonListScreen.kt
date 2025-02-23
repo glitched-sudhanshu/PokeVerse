@@ -97,7 +97,8 @@ fun PokemonListScreen(
         val favoritePokemonsListState = rememberLazyGridState()
 
         LaunchedEffect(state.searchResult) {
-            pokemonsListState.animateScrollToItem(0)
+            if(state.searchResult.isNotEmpty())
+                pokemonsListState.animateScrollToItem(0)
         }
 
         LaunchedEffect(state.selectedTabIndex) {
@@ -185,7 +186,7 @@ fun PokemonListScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.TopCenter
                     ) {
                         when (pageIndex) {
                             0 -> {
@@ -193,7 +194,7 @@ fun PokemonListScreen(
                                     Image(
                                         painter = painterResource(Res.drawable.pokeball_loading),
                                         contentDescription = "page-loader",
-                                        modifier = Modifier.size(64.dp)
+                                        modifier = Modifier.size(64.dp).align(Alignment.Center)
                                     )
                                 } else {
                                     when {
