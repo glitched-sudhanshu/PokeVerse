@@ -74,7 +74,7 @@ fun ActionButton(
             modifier = Modifier.padding(4.dp),
             model = action.image,
             loadingUi = null,
-            fallbackPainter = painterResource(Res.drawable.pokeball_loading),
+            fallbackResource = Res.drawable.pokeball_loading,
             contentDescription = action.title,
             colorFilter = ColorFilter.colorMatrix(
                 ColorMatrix().apply {

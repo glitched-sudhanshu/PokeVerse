@@ -142,8 +142,8 @@ fun App() {
                 navigation<PokemonMainRoute.PokemonArenaNavGraph>(
                     startDestination = ArenaRoute.BattleGround(
                         ground = "https://i.pinimg.com/originals/e9/55/5b/e9555b52cf2e05d1e0e8a5fb6001d6ed.jpg",
-                        firstPlayer = "https://static.wikia.nocookie.net/project-pokemon/images/3/3c/250px-007Squirtle.png/revision/latest/thumbnail/width/360/height/360?cb=20160917031328",
-                        secondPlayer = "https://unite.pokemon.com/images/pokemon/pikachu/stat/stat-pikachu.png"
+                        firstPlayer = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/7.gif",
+                        secondPlayer = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/female/25.gif"
                     )
                 ) {
                     composable<ArenaRoute.BattleGround> {
@@ -177,3 +177,6 @@ private inline fun <reified T : ViewModel> NavBackStackEntry.sharedKoinViewModel
         viewModelStoreOwner = parentEntry
     )
 }
+
+//firstPlayer = "https://static.wikia.nocookie.net/project-pokemon/images/3/3c/250px-007Squirtle.png/revision/latest/thumbnail/width/360/height/360?cb=20160917031328",
+//secondPlayer = "https://unite.pokemon.com/images/pokemon/pikachu/stat/stat-pikachu.png"

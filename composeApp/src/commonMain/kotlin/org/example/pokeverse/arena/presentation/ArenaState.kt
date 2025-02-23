@@ -1,7 +1,9 @@
 package org.example.pokeverse.arena.presentation
 
+import androidx.compose.runtime.Immutable
 import org.example.pokeverse.arena.data.Action
 
+@Immutable
 data class ArenaState(
     val ground: String,
     val firstPlayer: String,

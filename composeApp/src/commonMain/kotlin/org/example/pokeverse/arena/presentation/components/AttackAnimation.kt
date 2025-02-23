@@ -59,7 +59,7 @@ fun AttackAnimation(
                         animatableX.value + if (direction == Direction.LTR) (-155).dp.toPx() else 60.dp.toPx()
                 },
             model = image,
-            fallbackPainter = painterResource(Res.drawable.open_pokeball),
+            fallbackResource = Res.drawable.open_pokeball,
             contentDescription = null,
             loadingUi = null
         )

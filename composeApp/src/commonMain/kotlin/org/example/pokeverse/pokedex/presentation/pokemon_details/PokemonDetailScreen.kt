@@ -35,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -208,9 +209,9 @@ fun PokemonDetailScreen(
                         animatePokemonState = false
                     }
                     ImageWithLoader(
-                        model = pokemon.imageUrl,
+                        model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/35.gif",
                         contentDescription = pokemon.name,
-                        fallbackPainter = painterResource(Res.drawable.open_pokeball),
+                        fallbackResource = Res.drawable.open_pokeball,
                         modifier = Modifier.matchParentSize().graphicsLayer {
                             scaleX = animatePokemon
                             scaleY = animatePokemon

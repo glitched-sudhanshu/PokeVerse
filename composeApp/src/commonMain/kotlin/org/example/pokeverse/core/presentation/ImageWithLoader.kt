@@ -15,11 +15,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.rememberAsyncImagePainter
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ImageWithLoader(
     model: Any?,
-    fallbackPainter: Painter,
+    fallbackResource: DrawableResource,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     colorFilter: ColorFilter? = null,
@@ -56,7 +58,7 @@ fun ImageWithLoader(
 
         else -> {
             Image(
-                painter = if (result.isSuccess) painter else fallbackPainter,
+                painter = if (result.isSuccess) painter else painterResource(fallbackResource),
                 contentDescription = contentDescription,
                 modifier = modifier,
                 contentScale = if (result.isSuccess) {

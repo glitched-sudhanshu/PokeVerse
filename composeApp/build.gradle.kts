@@ -120,6 +120,7 @@ dependencies {
     implementation(libs.androidx.ui.android)
     implementation(libs.androidx.animation.core.android)
     debugImplementation(compose.uiTooling)
+    implementation(libs.coil.gif)
 }
 
 compose.desktop {

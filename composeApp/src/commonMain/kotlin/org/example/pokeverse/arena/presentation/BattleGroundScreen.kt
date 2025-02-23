@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
@@ -52,7 +53,6 @@ import org.example.pokeverse.arena.presentation.utils.waterSwirlImage
 import org.example.pokeverse.core.presentation.ImageWithLoader
 import org.example.pokeverse.core.presentation.clickableSingle
 import org.example.pokeverse.core.presentation.currentTime
-import org.jetbrains.compose.resources.painterResource
 import pokeverse.composeapp.generated.resources.Res
 import pokeverse.composeapp.generated.resources.fallback_ground
 import pokeverse.composeapp.generated.resources.pokeball_loading
@@ -102,7 +102,7 @@ fun BattleGroundScreen(
             contentDescription = "ground-${arenaState.ground}",
             loadingUi = null,
             modifier = Modifier.fillMaxSize(),
-            fallbackPainter = painterResource(Res.drawable.fallback_ground)
+            fallbackResource = Res.drawable.fallback_ground
         )
         Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             Box(
@@ -123,8 +123,9 @@ fun BattleGroundScreen(
                         )
                     }
             ) {
+                val firstPlayerHealth by derivedStateOf { arenaState.firstPlayerHealth / 100f }
                 HealthBar(
-                    healthPercentage = { arenaState.firstPlayerHealth / 100f },
+                    healthPercentage = { firstPlayerHealth },
                     direction = Direction.LTR,
                     modifier = Modifier.padding(24.dp).fillMaxWidth().height(40.dp)
                         .clip(RoundedCornerShape(12.dp))
@@ -148,8 +149,9 @@ fun BattleGroundScreen(
                         )
                     }
             ) {
+                val secondPlayerHealth by derivedStateOf { arenaState.secondPlayerHealth / 100f }
                 HealthBar(
-                    healthPercentage = { arenaState.secondPlayerHealth / 100f },
+                    healthPercentage = { secondPlayerHealth },
                     direction = Direction.RTL,
                     modifier = Modifier.padding(24.dp).fillMaxWidth().height(40.dp)
                         .clip(RoundedCornerShape(12.dp))
@@ -187,7 +189,7 @@ fun BattleGroundScreen(
                             model = arenaState.firstPlayer,
                             contentDescription = "first-player",
                             contentScale = ContentScale.Fit,
-                            fallbackPainter = painterResource(Res.drawable.pokeball_loading),
+                            fallbackResource = Res.drawable.pokeball_loading,
                             modifier = Modifier
                                 .size(width = 100.dp, height = 140.dp)
                                 .graphicsLayer { rotationY = -180f },
@@ -222,7 +224,7 @@ fun BattleGroundScreen(
                         ImageWithLoader(
                             model = arenaState.secondPlayer,
                             contentDescription = "second-player",
-                            fallbackPainter = painterResource(Res.drawable.pokeball_loading),
+                            fallbackResource = Res.drawable.pokeball_loading,
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
                                 .size(width = 100.dp, height = 140.dp),
