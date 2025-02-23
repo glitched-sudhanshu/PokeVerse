@@ -30,6 +30,20 @@ import org.example.pokeverse.arena.data.Direction
 import org.example.pokeverse.arena.presentation.components.ActionButton
 import org.example.pokeverse.arena.presentation.components.AttackAnimation
 import org.example.pokeverse.arena.presentation.components.ExplodePokemon
+import org.example.pokeverse.arena.presentation.utils.electroBallImage
+import org.example.pokeverse.arena.presentation.utils.pikachuMetaData
+import org.example.pokeverse.arena.presentation.utils.pikachuNormalAttackDamage
+import org.example.pokeverse.arena.presentation.utils.pikachuNormalAttackTitle
+import org.example.pokeverse.arena.presentation.utils.pikachuSpecialAttackDamage
+import org.example.pokeverse.arena.presentation.utils.pikachuSpecialAttackTitle
+import org.example.pokeverse.arena.presentation.utils.squirtleMetaData
+import org.example.pokeverse.arena.presentation.utils.squirtleNormalAttackDamage
+import org.example.pokeverse.arena.presentation.utils.squirtleNormalAttackTitle
+import org.example.pokeverse.arena.presentation.utils.squirtleSpecialAttackDamage
+import org.example.pokeverse.arena.presentation.utils.squirtleSpecialAttackTitle
+import org.example.pokeverse.arena.presentation.utils.thunderBoltImage
+import org.example.pokeverse.arena.presentation.utils.waterSplashImage
+import org.example.pokeverse.arena.presentation.utils.waterSwirlImage
 import org.example.pokeverse.core.presentation.ImageWithLoader
 import org.example.pokeverse.core.presentation.clickableSingle
 import org.example.pokeverse.core.presentation.currentTime
@@ -92,13 +106,10 @@ fun BattleGroundScreen(
                             ArenaAction.EnqueueFirstPlayerAction(
                                 Action.Attack(
                                     timestamp = currentTime.toString(),
-                                    image = "https://png.pngtree.com/png-vector/20231119/ourmid/pngtree-water-wave-isolated-on-transparent-background-png-image_10668832.png",
-                                    metaData = Action.MetaData(
-                                        primaryColor = 0xFF03ADFC,
-                                        secondaryColor = 0xFF034AFC,
-                                    ),
-                                    damage = 20f,
-                                    title = "Water Splash"
+                                    image = waterSplashImage,
+                                    metaData = squirtleMetaData,
+                                    damage = squirtleNormalAttackDamage,
+                                    title = squirtleNormalAttackTitle
                                 )
                             )
                         )
@@ -113,13 +124,10 @@ fun BattleGroundScreen(
                             ArenaAction.EnqueueSecondPlayerAction(
                                 Action.Attack(
                                     timestamp = currentTime.toString(),
-                                    image = "https://static.vecteezy.com/system/resources/previews/023/364/242/original/yellow-ball-lightning-abstract-electric-lightning-strike-light-flash-thunder-spark-png.png",
-                                    metaData = Action.MetaData(
-                                        primaryColor = 0xFFFCA503,
-                                        secondaryColor = 0xFFED5407,
-                                    ),
-                                    damage = 20f,
-                                    title = "Electro Ball"
+                                    image = electroBallImage,
+                                    metaData = pikachuMetaData,
+                                    damage = pikachuNormalAttackDamage,
+                                    title = pikachuNormalAttackTitle
                                 )
                             )
                         )
@@ -138,13 +146,10 @@ fun BattleGroundScreen(
                         ActionButton(
                             action = Action.SpecialAttack(
                                 timestamp = currentTime.toString(),
-                                image = "https://static.vecteezy.com/system/resources/previews/041/734/645/non_2x/ai-generated-water-splash-water-splash-free-png.png",
-                                metaData = Action.MetaData(
-                                    primaryColor = 0xFF03ADFC,
-                                    secondaryColor = 0xFF034AFC,
-                                ),
-                                damage = 45f,
-                                title = "Water Swirl"
+                                image = waterSwirlImage,
+                                metaData = squirtleMetaData,
+                                damage = squirtleSpecialAttackDamage,
+                                title = squirtleSpecialAttackTitle
                             ),
                             onPerform = {
                                 onAction(
@@ -181,13 +186,10 @@ fun BattleGroundScreen(
                         ActionButton(
                             action = Action.SpecialAttack(
                                 timestamp = currentTime.toString(),
-                                image = "https://png.pngtree.com/png-vector/20240202/ourmid/pngtree-yellow-ball-lightning-abstract-electric-lightning-strike-light-flash-thunder-spark-png-image_11531017.png",
-                                metaData = Action.MetaData(
-                                    primaryColor = 0xFFFCA503,
-                                    secondaryColor = 0xFFED5407,
-                                ),
-                                damage = 45f,
-                                title = "Thunder Bolt"
+                                image = thunderBoltImage,
+                                metaData = pikachuMetaData,
+                                damage = pikachuSpecialAttackDamage,
+                                title = pikachuSpecialAttackTitle
                             ),
                             onPerform = {
                                 onAction(ArenaAction.EnqueueSecondPlayerAction(it))
