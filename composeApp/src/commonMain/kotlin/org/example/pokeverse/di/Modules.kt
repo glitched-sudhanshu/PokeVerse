@@ -2,7 +2,10 @@ package org.example.pokeverse.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.example.pokeverse.arena.presentation.ArenaViewModel
+import org.example.pokeverse.core.data.AudioRepositoryImpl
 import org.example.pokeverse.core.data.HttpClientFactory
+import org.example.pokeverse.core.domain.AudioRepository
+import org.example.pokeverse.core.presentation.AudioViewModel
 import org.example.pokeverse.pokedex.data.database.DatabaseFactory
 import org.example.pokeverse.pokedex.data.database.FavoritePokemonDatabase
 import org.example.pokeverse.pokedex.data.network.KtorRemotePokemonDataSource
@@ -38,4 +41,5 @@ val sharedModule = module {
     viewModelOf(::PokemonListingViewModel)
     viewModelOf(::PokemonDetailViewModel)
     viewModelOf(::ArenaViewModel)
+    viewModelOf(::AudioViewModel)
 }

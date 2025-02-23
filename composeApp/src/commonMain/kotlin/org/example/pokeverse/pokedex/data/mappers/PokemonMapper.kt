@@ -30,7 +30,7 @@ fun TypeDto.toType() = Type(name = this.type.name, slot = this.slot)
 fun PokemonDto.toPokemon() = Pokemon(
     id = this.id,
     name = this.name,
-    soundUrl = this.cries.legacy ?: this.cries.latest,
+    soundUrl = this.cries.latest ?: this.cries.legacy,
     species = this.species.name,
     height = this.height,
     weight = this.weight,

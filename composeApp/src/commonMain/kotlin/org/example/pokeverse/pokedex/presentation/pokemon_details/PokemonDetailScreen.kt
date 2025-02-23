@@ -33,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,6 +54,7 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import getPokemonTypeColor
+import org.example.pokeverse.core.presentation.AudioViewModel
 import org.example.pokeverse.core.presentation.DesertWhite
 import org.example.pokeverse.core.presentation.ImageWithLoader
 import org.example.pokeverse.core.presentation.clickableSingle
@@ -67,10 +69,19 @@ import pokeverse.composeapp.generated.resources.pokeball_loading
 @Composable
 fun PokemonDetailScreenRoot(
     viewModel: PokemonDetailViewModel,
+    audioViewModel: AudioViewModel,
     onBackClick: () -> Unit,
 ) {
     val state by viewModel.pokemonDetailsState.collectAsStateWithLifecycle()
     state.pokemon?.let { pokemon ->
+        DisposableEffect(Unit) {
+            pokemon.soundUrl?.let {
+                audioViewModel.play(it)
+            }
+            onDispose {
+                audioViewModel.stop()
+            }
+        }
         PokemonDetailScreen(
             pokemon = pokemon,
             isFavourite = state.isFavourite,

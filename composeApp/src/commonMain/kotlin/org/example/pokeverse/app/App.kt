@@ -29,6 +29,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import org.example.pokeverse.arena.presentation.ArenaViewModel
 import org.example.pokeverse.arena.presentation.RootBattleGroundScreen
+import org.example.pokeverse.core.presentation.AudioViewModel
 import org.example.pokeverse.pokedex.presentation.PokeDexViewModel
 import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailAction
 import org.example.pokeverse.pokedex.presentation.pokemon_details.PokemonDetailScreenRoot
@@ -121,7 +122,7 @@ fun App() {
                         val viewmodel = koinViewModel<PokemonDetailViewModel>()
 
                         val selectedPokemon by sharedViewModel.selectedPokemon.collectAsStateWithLifecycle()
-
+                        val audioViewModel = koinViewModel<AudioViewModel>()
                         LaunchedEffect(selectedPokemon) {
                             selectedPokemon.pokemon?.let {
                                 viewmodel.onAction(PokemonDetailAction.OnSelectedPokemonChange(it))
@@ -130,6 +131,7 @@ fun App() {
 
                         PokemonDetailScreenRoot(
                             viewModel = viewmodel,
+                            audioViewModel = audioViewModel,
                             onBackClick = {
                                 navController.popBackStack()
                             }
