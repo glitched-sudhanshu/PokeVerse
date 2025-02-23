@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -30,6 +34,7 @@ import org.example.pokeverse.arena.data.Direction
 import org.example.pokeverse.arena.presentation.components.ActionButton
 import org.example.pokeverse.arena.presentation.components.AttackAnimation
 import org.example.pokeverse.arena.presentation.components.ExplodePokemon
+import org.example.pokeverse.arena.presentation.components.HealthBar
 import org.example.pokeverse.arena.presentation.utils.electroBallImage
 import org.example.pokeverse.arena.presentation.utils.pikachuMetaData
 import org.example.pokeverse.arena.presentation.utils.pikachuNormalAttackDamage
@@ -88,6 +93,9 @@ fun BattleGroundScreen(
     arenaState: ArenaState,
     onAction: (ArenaAction) -> Unit
 ) {
+    LaunchedEffect(arenaState) {
+        println("dekh dekh $arenaState")
+    }
     Box(modifier = modifier.fillMaxSize()) {
         ImageWithLoader(
             model = arenaState.ground,
@@ -114,7 +122,14 @@ fun BattleGroundScreen(
                             )
                         )
                     }
-            )
+            ) {
+                HealthBar(
+                    healthPercentage = { arenaState.firstPlayerHealth / 100f },
+                    direction = Direction.LTR,
+                    modifier = Modifier.padding(24.dp).fillMaxWidth().height(40.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                )
+            }
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -132,7 +147,14 @@ fun BattleGroundScreen(
                             )
                         )
                     }
-            )
+            ) {
+                HealthBar(
+                    healthPercentage = { arenaState.secondPlayerHealth / 100f },
+                    direction = Direction.RTL,
+                    modifier = Modifier.padding(24.dp).fillMaxWidth().height(40.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                )
+            }
         }
 
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize().padding(24.dp)) {
