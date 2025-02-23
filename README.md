@@ -12,6 +12,8 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
   you need this entry point for your iOS app. This is also where you should add SwiftUI code for
   your project.
 
+Currently, the application is not optimized for desktop and few features are yet to complete for iOS.
+
 Learn more
 about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
 
@@ -28,6 +30,5 @@ Todos:
    Currently, the app closes on back press in favourite section.
 6. For the special action button in 1v1, change its implementation to bitmap to reduce
    recomposition (refer PokeVerse repo)
-7. Refactor all the hardcoded actions in one place
-8. Hoist game over screen
-9. Center loader while loading next page
+7. Hoist game over screen
+8. Center loader while loading next page
