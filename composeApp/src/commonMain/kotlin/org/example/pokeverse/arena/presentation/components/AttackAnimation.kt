@@ -56,7 +56,7 @@ fun AttackAnimation(
             modifier = Modifier
                 .graphicsLayer {
                     translationX =
-                        animatableX.value + if (direction == Direction.LTR) (-120).dp.toPx() else 60.dp.toPx()
+                        animatableX.value + if (direction == Direction.LTR) (-155).dp.toPx() else 60.dp.toPx()
                 },
             model = image,
             fallbackPainter = painterResource(Res.drawable.open_pokeball),
