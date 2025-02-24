@@ -209,7 +209,7 @@ fun PokemonDetailScreen(
                         animatePokemonState = false
                     }
                     ImageWithLoader(
-                        model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/35.gif",
+                        model = pokemon.imageUrl,
                         contentDescription = pokemon.name,
                         fallbackResource = Res.drawable.open_pokeball,
                         modifier = Modifier.matchParentSize().graphicsLayer {
