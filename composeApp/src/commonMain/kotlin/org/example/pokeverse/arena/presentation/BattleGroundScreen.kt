@@ -50,6 +50,7 @@ import org.example.pokeverse.arena.presentation.utils.squirtleSpecialAttackTitle
 import org.example.pokeverse.arena.presentation.utils.thunderBoltImage
 import org.example.pokeverse.arena.presentation.utils.waterSplashImage
 import org.example.pokeverse.arena.presentation.utils.waterSwirlImage
+import org.example.pokeverse.core.presentation.AudioViewModel
 import org.example.pokeverse.core.presentation.ImageWithLoader
 import org.example.pokeverse.core.presentation.clickableSingle
 import org.example.pokeverse.core.presentation.currentTime
@@ -61,10 +62,13 @@ import pokeverse.composeapp.generated.resources.pokeball_loading
 fun RootBattleGroundScreen(
     modifier: Modifier = Modifier,
     viewModel: ArenaViewModel,
+    audioViewModel: AudioViewModel
 ) {
     DisposableEffect(Unit) {
+        audioViewModel.play("https://ia801408.us.archive.org/19/items/pokemon-battle-sound/pokemon-battle.mp3")
         setScreenOrientationLandscape()
         onDispose {
+            audioViewModel.stop()
             setScreenOrientationPortrait()
         }
     }

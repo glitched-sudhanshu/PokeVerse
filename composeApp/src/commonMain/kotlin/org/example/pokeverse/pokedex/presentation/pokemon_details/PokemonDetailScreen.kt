@@ -35,7 +35,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +48,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
@@ -209,13 +209,14 @@ fun PokemonDetailScreen(
                         animatePokemonState = false
                     }
                     ImageWithLoader(
-                        model = pokemon.imageUrl,
+                        model = pokemon.gifUrl ?: pokemon.imageUrl,
                         contentDescription = pokemon.name,
                         fallbackResource = Res.drawable.open_pokeball,
+                        contentScale = ContentScale.Fit,
                         modifier = Modifier.matchParentSize().graphicsLayer {
                             scaleX = animatePokemon
                             scaleY = animatePokemon
-                        }.padding(vertical = 32.dp)
+                        }.padding(vertical = if(pokemon.gifUrl != null) 100.dp else 32.dp)
                             .aspectRatio(1f, matchHeightConstraintsFirst = true)
                     )
                 }

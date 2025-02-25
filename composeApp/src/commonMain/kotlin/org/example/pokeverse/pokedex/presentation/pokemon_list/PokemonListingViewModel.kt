@@ -45,7 +45,10 @@ class PokemonListingViewModel(
 
             is PokemonListAction.OnSearchQueryChange -> {
                 _state.update {
-                    it.copy(searchQuery = action.query)
+                    it.copy(
+                        searchQuery = action.query,
+                        searchResult = if (action.query == null) emptyList() else it.searchResult
+                    )
                 }
             }
 

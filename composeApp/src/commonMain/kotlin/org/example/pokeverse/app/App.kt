@@ -148,10 +148,12 @@ fun App() {
                 ) {
                     composable<ArenaRoute.BattleGround> {
                         val arenaViewModel = koinViewModel<ArenaViewModel>()
+                        val audioViewModel = koinViewModel<AudioViewModel>()
                         CompositionLocalProvider(LocalNavController provides navController) {
                             RootBattleGroundScreen(
                                 modifier = Modifier.fillMaxSize(),
                                 viewModel = arenaViewModel,
+                                audioViewModel = audioViewModel
                             )
                         }
                     }
