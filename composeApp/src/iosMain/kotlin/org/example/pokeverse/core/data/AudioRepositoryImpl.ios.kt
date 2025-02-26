@@ -8,7 +8,7 @@ import org.example.pokeverse.core.domain.AudioRepository
 import platform.AVFAudio.AVAudioPlayer
 
 actual class AudioRepositoryImpl(private val avAudioPlayer: AVAudioPlayer) : AudioRepository {
-    override fun play(url: String) {
+    override fun play(url: String, loop: Boolean) {
     }
 
     override fun stop() {

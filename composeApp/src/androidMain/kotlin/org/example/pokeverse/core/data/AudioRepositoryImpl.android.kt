@@ -3,6 +3,7 @@ package org.example.pokeverse.core.data
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.Player.REPEAT_MODE_OFF
+import androidx.media3.common.Player.REPEAT_MODE_ONE
 import androidx.media3.exoplayer.ExoPlayer
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -11,9 +12,9 @@ import org.example.pokeverse.core.domain.AudioRepository
 
 actual class AudioRepositoryImpl(private val exoPlayer: ExoPlayer) :
     AudioRepository {
-    override fun play(url: String) {
+    override fun play(url: String, loop: Boolean) {
         exoPlayer.setMediaItem(MediaItem.fromUri(url))
-        exoPlayer.repeatMode = REPEAT_MODE_OFF
+        exoPlayer.repeatMode = if (loop) REPEAT_MODE_ONE else REPEAT_MODE_OFF
         exoPlayer.prepare()
         exoPlayer.playWhenReady = true
         exoPlayer.play()
