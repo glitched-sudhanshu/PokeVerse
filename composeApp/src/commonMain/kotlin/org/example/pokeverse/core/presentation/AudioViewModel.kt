@@ -25,9 +25,9 @@ class AudioViewModel(private val audioRepository: AudioRepository) : ViewModel()
         }
     }
 
-    fun play(url: String) {
+    fun play(url: String, loop: Boolean = false) {
         audioRepository.stop()
-        audioRepository.play(url)
+        audioRepository.play(url, loop)
         audioRepository.setMute(false)
         isMuted.value = false
     }

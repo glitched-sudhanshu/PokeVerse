@@ -65,7 +65,10 @@ fun RootBattleGroundScreen(
     audioViewModel: AudioViewModel
 ) {
     DisposableEffect(Unit) {
-        audioViewModel.play("https://ia801408.us.archive.org/19/items/pokemon-battle-sound/pokemon-battle.mp3")
+        audioViewModel.play(
+            "https://ia801408.us.archive.org/19/items/pokemon-battle-sound/pokemon-battle.mp3",
+            loop = true
+        )
         setScreenOrientationLandscape()
         onDispose {
             audioViewModel.stop()
