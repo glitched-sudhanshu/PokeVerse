@@ -1,9 +1,0 @@
-package org.example.pokeverse.pokedex.data.database.entities
-
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class AbilityEntity(
-    val ability: String,
-    val slot: Int
-)

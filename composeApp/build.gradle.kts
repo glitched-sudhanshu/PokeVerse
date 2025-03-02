@@ -90,11 +90,11 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.pokeverse"
+    namespace = "org.r02_sudhanshu.pokeverse"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "org.example.pokeverse"
+        applicationId = "org.r02_sudhanshu.pokeverse"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -135,11 +135,11 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "org.example.pokeverse.MainKt"
+        mainClass = "org.r02_sudhanshu.pokeverse.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.example.pokeverse"
+            packageName = "org.r02_sudhanshu.pokeverse"
             packageVersion = "1.0.0"
         }
     }
