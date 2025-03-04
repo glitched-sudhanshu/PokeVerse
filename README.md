@@ -34,3 +34,5 @@ Todos:
    recomposition (refer PokeVerse repo)
 7. Hoist game over screen
 8. Center loader while loading next page
+
+NOTE: This project is currently on going, and is not well optimized for desktop and iOS.
