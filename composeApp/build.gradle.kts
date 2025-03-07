@@ -10,6 +10,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 kotlin {
@@ -50,6 +52,9 @@ kotlin {
             implementation(libs.androidx.media3.exoplayer)
             implementation(libs.androidx.media3.exoplayer.dash)
             implementation(libs.androidx.media3.ui)
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:33.10.0"))
+            implementation("com.google.firebase:firebase-analytics")
+            implementation("com.google.firebase:firebase-crashlytics")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -116,6 +121,7 @@ android {
             isDebuggable = false
         }
         debug {
+            applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             isDebuggable = true
         }

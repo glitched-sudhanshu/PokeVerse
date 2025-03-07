@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "562341187155",
+    "project_id": "pokeverse-d76fe",
+    "storage_bucket": "pokeverse-d76fe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562341187155:android:cd1b2c09637a448a4580a6",
+        "android_client_info": {
+          "package_name": "org.r02_sudhanshu.pokeverse.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf7QmDApI2b85U7Q0X_O8JKFrXRO5WFbI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
